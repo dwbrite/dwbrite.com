@@ -1,0 +1,41 @@
+html {
+	font-family: serif;
+	color: white;
+	min-height: 100%;
+}
+
+body {
+	background:
+			radial-gradient(circle at -20% -20%,
+			rgba(255,128,0,.7),
+			rgba(128,128,64,.05) 70%),
+			radial-gradient(circle at 25% 125%,
+			rgba(0,192,255,.5),
+			rgba(64,255,255,0) 70%),
+			radial-gradient(circle at 150% 50%,
+			rgba(128,0,255,.4),
+			rgba(255,64,128,0) 100%),
+			radial-gradient(circle at 100% 50%,
+			rgba(255,255,255,1),
+			rgba(255,255,255,0) 100%) #ddd no-repeat center center fixed;
+
+	background-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover;
+
+	margin: 0;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+main {
+	margin: 0 auto;
+}
+
+p {
+	color: black;
+}
+
+article {
+	margin: 2em;
+}
