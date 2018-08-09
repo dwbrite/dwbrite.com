@@ -23,7 +23,7 @@ Make sure the service is running.
 * Finally, run the server!
 
 ## License
-Copyright (C) 2018 Devin Brite
+Copyright (C) 2018 Devin Brite  
 SPDX-License-Identifier: GPL-3.0-or-later OR  CC0-1.0 OR MIT
 
 Full texts can be found in `LICENSE.md`
