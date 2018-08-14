@@ -1,0 +1,9 @@
+{{ define "subcontent" }}
+    <h3><a href="/blog/post/{{$.Uid}}">{{$.Content.Title}}</a></h3>
+    <time datetime="{{.PostDate | formatDate }}">{{.PostDate | formatDate }}</time>
+    <article>{{.Content.Body}}</article>
+{{ end }}
+
+{{ define "content" }}
+    {{template "subcontent" .}}
+{{ end }}
