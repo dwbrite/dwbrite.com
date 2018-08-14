@@ -23,7 +23,10 @@ CREATE TABLE pages (
 ) WITH (OIDS=FALSE);
 
 -- Example insertion into `posts`.
--- INSERT INTO posts(title, body) VALUES('o', 'hej');
+INSERT INTO posts(title, body) VALUES('o', 'hej');
+INSERT INTO posts(title, body) VALUES('u', 'r a');
+INSERT INTO posts(title, body) VALUES('kewl', 'kitton mittons');
+
 
 -- Example insertions into `pages`.
 INSERT INTO pages(title, body) VALUES('About Me',
