@@ -1,35 +1,39 @@
 -- Drop all tables. This should only be used in the development environment.
-drop table posts;
-drop table projects;
-drop table pages;
+drop table posts cascade;
+drop table projects cascade;
+drop table pages cascade;
 
--- Create all tables.
-CREATE TABLE posts (
+-- Example table creation (automated with api).
+CREATE TABLE IF NOT EXISTS posts (
   uid serial PRIMARY KEY,
-  title varchar(128) NOT NULL,
+  optional_summary varchar(192),
+  title varchar(128) UNIQUE NOT NULL,
   body text NOT NULL,
-  post_date date DEFAULT CURRENT_DATE
+  post_date date DEFAULT CURRENT_DATE NOT NULL
 ) WITH (OIDS=FALSE);
 
-CREATE TABLE projects (
-  title varchar(128) PRIMARY KEY,
-  summary varchar(192) NOT NULL,
-  body text NOT NULL
-) WITH (OIDS=FALSE);
+-- Example summary function for posts (automated with api).
+CREATE OR REPLACE FUNCTION summary(rec posts)
+  RETURNS varchar(192)
+LANGUAGE SQL
+AS
+$$
+SELECT
+       CASE WHEN $1.optional_summary IS NULL
+                 THEN
+           CASE WHEN length($1.body) > 192
+                     THEN
+               $1.body::varchar(191) || '…'
+                ELSE
+               $1.body::varchar(192)
+               END
+            ELSE
+           $1.optional_summary
+           END
+$$;
 
-CREATE TABLE pages (
-  title varchar(128) PRIMARY KEY,
-  body text NOT NULL
-) WITH (OIDS=FALSE);
-
--- Example insertion into `posts`.
-INSERT INTO posts(title, body) VALUES('o', 'hej');
-INSERT INTO posts(title, body) VALUES('u', 'r a');
-INSERT INTO posts(title, body) VALUES('kewl', 'kitton mittons');
-
-
--- Example insertions into `pages`.
-INSERT INTO pages(title, body) VALUES('About Me',
+-- Example manual insertion into `pages`. Pretty simple, really.
+INSERT INTO pages(title, body) VALUES('Home',
                                       '<p/>Hello! My name is Devin Brite. ' ||
                                       'As a college student I''m involved in web development and programming. ' ||
                                       'As a hobbyist, I make games. ' ||
@@ -52,9 +56,3 @@ INSERT INTO pages(title, body) VALUES('About Me',
                                       'My least favorite is Visual Basic. I <i>despise</i> the Microsoft ecosystem, ' ||
                                       'and I will tell you this every time I have to use it. ' ||
                                       '<a href="https://docs.google.com/spreadsheets/d/1R9KzpWbyOp9GM-laW3as4nkQBD2jWWaAT8XgrpFzJN0/edit?usp=sharing">I <i>really</i> like spreadsheets.</a>');
-
-
-INSERT INTO pages(title, body) VALUES('401', 'Get out. Get out right now. You''re not welcome here. Unless you are. In which case... You may want to update your credentials.');
-INSERT INTO pages(title, body) VALUES('403', 'Quit snooping around!');
-INSERT INTO pages(title, body) VALUES('404', 'Page not found :(');
-INSERT INTO pages(title, body) VALUES('503', 'Either you''re overloading my server or it''s down for maintenance. Chill.');

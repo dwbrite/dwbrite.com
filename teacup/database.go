@@ -44,7 +44,7 @@ func selectContents(queryRow func(db sql.DB, p PageContents) (*sql.Row, error), 
 	return &p, nil
 }
 
-func (t *teacup) CreateTable(name string, uniqueTitles bool) sql.Result {
+func (t *teacup) CreateTable(name string, uniqueTitles bool) {
 	db, _ := sql.Open("postgres", t.DbInfo)
 	defer db.Close()
 
@@ -53,21 +53,40 @@ func (t *teacup) CreateTable(name string, uniqueTitles bool) sql.Result {
 		unique = "UNIQUE"
 	}
 
-	result, err := db.Exec(
+	_, err := db.Exec(
 		`CREATE TABLE IF NOT EXISTS ` + name + ` (
 		uid serial PRIMARY KEY,
-		summary varchar(192),
+		optional_summary varchar(192),
 		title varchar(128) ` + unique + ` NOT NULL,
 		body text NOT NULL,
 		post_date date DEFAULT CURRENT_DATE NOT NULL
 	) WITH (OIDS=FALSE)`)
 
-	if err != nil {
-		t.Log.Fatal(err)
-	}
+	if err != nil { t.Log.Fatal(err) }
+
+	_, err = db.Exec(`
+-- Summary function for body.
+CREATE OR REPLACE FUNCTION summary(rec `+ name +`)
+  RETURNS varchar(192)
+LANGUAGE SQL
+AS
+$$
+SELECT
+       CASE WHEN $1.optional_summary IS NULL
+                 THEN
+           CASE WHEN length($1.body) > 192
+                     THEN
+               $1.body::varchar(191) || '…'
+                ELSE
+               $1.body::varchar(192)
+               END
+            ELSE
+           $1.optional_summary
+           END
+$$;`)
+
+	if err != nil { t.Log.Fatal(err) }
 
 	t.tables[name] = uniqueTitles
 	//TODO("check for duplicates")
-
-	return result
 }

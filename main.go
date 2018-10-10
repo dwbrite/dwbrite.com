@@ -60,7 +60,7 @@ func formatDate(t time.Time) string {
 func blogQuery(request http.Request, dbInfo string) interface{} {
 	query := request.URL.Query()
 	postUid := query.Get("post")
-	pageNum := query.Get("page")
+	//pageNum := query.Get("page")
 
 	blogPosts := blogPage{
 		[]PageContents{},
