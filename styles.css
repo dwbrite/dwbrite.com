@@ -1,8 +1,27 @@
 html {
-	font-family: serif;
-	color: white;
+	font-family: "Fira Sans Light";
+	color: #505050;
 	min-height: 100%;
+	font-size: 13pt;
 }
+
+h1, h2, h3 {
+	font-family: "Fira Sans SemiBold";
+	color: white;
+}
+
+h4, h5, h6 {
+	font-family: "Merriweather";
+}
+
+a {
+	text-decoration: none;
+	font-family: "Fira Sans Light";
+	color: #08d;
+}
+
+a:visited { color: #a0f; }
+a:hover { color: #6af; }
 
 body {
 	background:
