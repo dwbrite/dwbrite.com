@@ -6,7 +6,7 @@ import (
 )
 
 func SelectContentByUid(uid string, table string, dbInfo string) (*PageContents, error) {
-	queryRow := func(db sql.DB, p PageContents) (*sql.Row, error) {
+	queryRow := func(db sql.DB) (*sql.Row, error) {
 		i_uid, err := strconv.Atoi(uid)
 		if err != nil { return nil, err }
 		return db.QueryRow(`
@@ -15,33 +15,58 @@ FROM ` + table + ` pa
 WHERE uid = $1;`, i_uid), nil
 	}
 
-	return selectContents(queryRow, dbInfo)
+	return selectContent(queryRow, dbInfo)
 }
 
 func SelectContentByTitle(title string, table string, dbInfo string) (*PageContents, error) {
-	queryRow := func(db sql.DB, p PageContents) (*sql.Row, error) {
+	queryRow := func(db sql.DB) (*sql.Row, error) {
 		return db.QueryRow(`
 SELECT pa.uid, pa.summary, pa.title, pa.body, pa.post_date
 FROM ` + table + ` pa
 WHERE title = $1;`, title), nil
 	}
 
-	return selectContents(queryRow, dbInfo)
+	return selectContent(queryRow, dbInfo)
 }
 
-func selectContents(queryRow func(db sql.DB, p PageContents) (*sql.Row, error), dbInfo string) (*PageContents, error){
+func SelectNSortedByUid(n int, offset int, table string, dbInfo string) ([]*PageContents, error) {
+	
+	return nil, nil
+}
+
+func SelectMultipleSortedByDate(n int, offset int, table string, dbInfo string) ([]*PageContents, error) {
+	return nil, nil
+}
+
+func selectContent(queryRow func(db sql.DB) (*sql.Row, error), dbInfo string) (*PageContents, error){
 	db, _ := sql.Open("postgres", dbInfo)
 	defer db.Close()
 
 	var p PageContents
 
-	row, err := queryRow(*db, p)
+	row, err := queryRow(*db)
 	if err != nil { return nil, err }
 
 	err = row.Scan(&p.Uid, &p.Summary, &p.Title, &p.Body, &p.PostDate)
 	if err != nil { return nil, err }
 
 	return &p, nil
+}
+
+func selectContents(query func(db sql.DB, p PageContents) (*sql.Rows, error), dbInfo string) (*PageContents, error){
+	db, _ := sql.Open("postgres", dbInfo)
+	defer db.Close()
+
+	var p PageContents
+
+	rows, err := query(*db, p)
+	if err != nil { return nil, err }
+
+	//TODO("Fill in rest of function")
+	//err = rows.Scan(&p.Uid, &p.Summary, &p.Title, &p.Body, &p.PostDate)
+	//if err != nil { return nil, err }
+
+	return nil, nil
 }
 
 func (t *teacup) CreateTable(name string, uniqueTitles bool) {
