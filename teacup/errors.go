@@ -18,7 +18,7 @@ type tcErrors struct {
 
 func newTcErrors() tcErrors {
 	return tcErrors{
-		template.Must(template.New("tmpl") .ParseFiles("teacup/error_template.gohtml")),
+		template.Must(template.New("teacup_error").ParseFiles("teacup/error_template.gohtml")),
 		map[int]string{
 			http.StatusBadRequest:                   "Bad Request",
 			http.StatusUnauthorized:                 "Unauthorized",
@@ -74,11 +74,13 @@ func (e *tcErrors) setErrorText(code int, media string) {
 
 func (t *teacup) serveError(writer http.ResponseWriter, httpStatus int) {
 	writer.WriteHeader(httpStatus)
-	t.errors.template.Execute(writer,
+	err := t.errors.template.Execute(writer,
 		errorPage{
 			httpStatus,
 			t.errors.errorMessages[httpStatus],
 	})
+
+	t.checkAndLogError(err)
 }
 
 func (t teacup) checkAndLogError(err error) bool {

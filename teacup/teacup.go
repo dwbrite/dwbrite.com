@@ -73,6 +73,7 @@ func (t *teacup) StartServer() {
 
 func (t *teacup) matchRequest(writer http.ResponseWriter, request *http.Request) {
 	path := request.URL.Path
+
 	switch {
 	case t.DirBlacklist.MatchString(path):
 		t.serveError(writer, http.StatusForbidden)
