@@ -62,7 +62,7 @@ func (t *teacup) CreateTable(name string, uniqueTitles bool) {
 		post_date date DEFAULT CURRENT_DATE NOT NULL
 	) WITH (OIDS=FALSE)`)
 
-	if err != nil { t.Log.Fatal(err) }
+	if err != nil { t.Log.Fatal(err, "\nTeacup could not connect to postgresql database.") }
 
 	_, err = db.Exec(`
 -- Summary function for body.
