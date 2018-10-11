@@ -99,6 +99,6 @@ func blogQuery(request http.Request, dbInfo string) interface{} {
 	return nil //TODO(Return blog page 0)
 }
 
-func postPath(writer http.ResponseWriter) interface{} {
+/*func postPath(writer http.ResponseWriter) interface{} {
 	return writer
-}
+}*/
