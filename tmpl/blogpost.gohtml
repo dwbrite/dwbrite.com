@@ -1,5 +1,5 @@
 {{ define "subcontent" }}
-    <h3><a href="/blog/?post={{$.Uid}}">{{$.Title}}</a></h3>
+    <h3><a href="/blog?post={{$.Uid}}">{{$.Title}}</a></h3>
     <time datetime="{{.PostDate | formatDate }}">{{.PostDate | formatDate }}</time>
     <article>{{$.Body}}</article>
 {{ end }}

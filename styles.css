@@ -14,16 +14,14 @@ h4, h5, h6 {
 	font-family: "Merriweather";
 }
 
-a {
-	text-decoration: none;
-	font-family: "Fira Sans Light";
-	color: #08d;
-}
-
-a:visited { color: #a0f; }
-a:hover { color: #6af; }
+a { color: #05b; text-decoration: none; }
+a:visited { color: #05b; }
+a:hover { text-decoration: underline; }
+a:active { color: #d40; }
 
 body {
+	max-width: 800px;
+
 	background:
 			radial-gradient(circle at -20% -20%,
 			rgba(255,128,0,.7),
@@ -40,7 +38,7 @@ body {
 
 	background-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover;
 
-	margin: 0;
+	margin: 0 auto;
 	padding: 0;
 	display: flex;
 	align-items: center;

@@ -14,10 +14,11 @@ import (
 	"os"
 	"regexp"
 	"time"
+	strconv "strconv"
 )
 
 type blogPage struct {
-	BlogPosts	[]PageContents
+	BlogPosts	[]*PageContents
 	Title		string
 	PageNum		uint32
 }
@@ -58,45 +59,38 @@ func formatDate(t time.Time) string {
 
 
 func blogQuery(request http.Request, dbInfo string) interface{} {
+	var limit uint32 = 5
 	query := request.URL.Query()
 	postUid := query.Get("post")
-	//pageNum := query.Get("page")
 
 	blogPosts := blogPage{
-		[]PageContents{},
+		[]*PageContents{},
 		"Blog",
 		0,
 	}
 
-	/*pageNum, err := strconv.Atoi(request.URL.Query().Get("page"))
-	if err != nil {
-		pageNum = -1
-	}*/
+	// TODO: check if pageNum query > number of pages.
+	page, err := strconv.Atoi(request.URL.Query().Get("page"))
+	if err != nil || page < 1 {
+		blogPosts.PageNum = 0
+	} else {
+		blogPosts.PageNum = uint32(page)
+	}
 	if postUid != "" {
 		post, _ := SelectContentByUid(postUid, "posts", dbInfo)
-		if post != nil {
-			blogPosts.BlogPosts = append(blogPosts.BlogPosts, *post)
-			return blogPosts
-		}
-	} /* TODO("Create Query for multiple ")
-	else if pageNum == -1 {
-		posts, err := t.selectPosts("SELECT * FROM " +
-			"(SELECT * FROM posts ORDER BY post_date DESC " +
-			"LIMIT 5) AS derivedTable " +
-			"ORDER BY post_date DESC;")
+
+		blogPosts.BlogPosts = append(blogPosts.BlogPosts, post)
+		return blogPosts
 	} else {
-		posts, err := t.selectPosts("SELECT * FROM posts ORDER BY post_date ASC " +
-			"LIMIT " + strconv.Itoa(t.PostsPerPage) +
-			"OFFSET " + strconv.Itoa(t.PostsPerPage*(pageNum)) + ";")
+		posts, err := SelectMultipleContents(limit, limit*blogPosts.PageNum, Post_date, DESC, "posts", dbInfo)
+
+		if err != nil {
+			posts, _ = SelectMultipleContents(limit, 0, Post_date, DESC, "posts", dbInfo)
+		}
+
+		blogPosts.BlogPosts = append(blogPosts.BlogPosts, posts...)
+		return blogPosts
 	}
-
-	blogPosts.BlogPosts = posts
-	err = postsTemplate.ExecuteTemplate(writer, "base", blogPosts)
-	if t.checkError(writer, err) {
-		return
-	}*/
-
-	return nil //TODO(Return blog page 0)
 }
 
 /*func postPath(writer http.ResponseWriter) interface{} {
