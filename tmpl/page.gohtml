@@ -1,4 +1,12 @@
 {{ define "content" }}
-<h2>{{.Title}}</h2>
-<article>{{.Body}}</article>
+<article>
+  <h2>{{if fieldExists "Title" .}}{{.Title}}{{else}}{{.Status}}{{end}}</h2>
+  <p>
+  {{if fieldExists "Body" .}}
+    {{.Body}}
+  {{else}}
+    {{.Message}}
+  {{end}}
+  </p>
+</article>
 {{ end }}
