@@ -1,6 +1,5 @@
 {{ define "content" }}
-        <h2>Blog</h2>
-        {{ range .BlogPosts }}
-            {{ template "subcontent" .}}
-        {{ end }}
+  {{ range .BlogPosts }}
+    {{ template "subcontent" .}}
+  {{ end }}
 {{ end }}

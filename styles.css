@@ -1,58 +1,122 @@
 html {
-	font-family: "Fira Sans Light";
-	color: #505050;
-	min-height: 100%;
-	font-size: 13pt;
+    font-family: sans-serif;
+    color: #444;
+    min-height: 100%;
 }
 
-h1, h2, h3 {
-	font-family: "Fira Sans SemiBold";
-	color: white;
+@media screen and (min-width: 320px) {
+    body {
+        font-size: calc(1rem + 1.5vmin);
+    }
 }
 
-h4, h5, h6 {
-	font-family: "Merriweather";
+@media screen and (min-width: 1080px) {
+    body {
+        font-size: 19px;
+    }
 }
 
-a { color: #05b; text-decoration: none; }
-a:visited { color: #05b; }
-a:hover { text-decoration: underline; }
-a:active { color: #d40; }
+header div h1 {
+    margin: 0.25em;
+}
+
+header div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    margin: 0.5em auto 2em auto;
+}
+
+header nav ul {
+    margin: 0 5%;
+    padding: 0;
+}
+
+h1, h2{
+    font-family: sans-serif;
+    color: white;
+}
+
+h1 {
+    font-size: 1.4em;
+}
+
+h2 {
+    font-size: 1.2em;
+}
+
+h3, h4, h5, h6 {
+    font-family: serif;
+}
+
+a {
+    color: #06b;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    color: #c60;
+}
 
 body {
-	max-width: 800px;
+    max-width: 44em;
+    margin: 50px auto 15px auto;
+    padding: 0;
+    overflow-wrap: break-word;
 
-	background:
-			radial-gradient(circle at -20% -20%,
-			rgba(255,128,0,.7),
-			rgba(128,128,64,.05) 70%),
-			radial-gradient(circle at 25% 125%,
-			rgba(0,192,255,.5),
-			rgba(64,255,255,0) 70%),
-			radial-gradient(circle at 150% 50%,
-			rgba(128,0,255,.4),
-			rgba(255,64,128,0) 100%),
-			radial-gradient(circle at 100% 50%,
-			rgba(255,255,255,1),
-			rgba(255,255,255,0) 100%) #ddd no-repeat center center fixed;
+    font-kerning: normal;
 
-	background-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover;
+    background: radial-gradient(circle at -20% -20%,
+            rgba(255, 128, 0, .7),
+            rgba(128, 128, 64, .05) 70%),
+    radial-gradient(circle at 25% 125%,
+            rgba(0, 192, 255, .5),
+            rgba(64, 255, 255, 0) 70%),
+    radial-gradient(circle at 150% 50%,
+            rgba(128, 0, 255, .4),
+            rgba(255, 64, 128, 0) 100%),
+    radial-gradient(circle at 100% 50%,
+            rgba(255, 255, 255, 1),
+            rgba(255, 255, 255, 0) 100%), no-repeat center center fixed;
 
-	margin: 0 auto;
-	padding: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
 }
 
 main {
-	margin: 0 auto;
+    margin: auto 1em;
 }
 
-p {
-	color: black;
+div.post-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
 }
 
-article {
-	margin: 2em;
+div.post-header time {
+    color: #666;
+    margin-bottom: 0.75em;
+    margin-left: auto;
+    font-family: monospace;
+    font-feature-settings: "onum" 1;
+    font-size: smaller;
 }
+
+
+html                 { font-family: "Fira Sans Light", sans-serif; }
+h1, h2               { font-family: "Fira Sans SemiBold", sans-serif; }
+h3, h4, h5, h6       { font-family: "Merriweather", serif; }
+div.post-header time { font-family: "Fira Code", monospace; }
