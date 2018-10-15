@@ -7,29 +7,27 @@ import (
 	"net/http"
 	"regexp"
 	"strconv"
-	"strings"
 	"time"
 )
 
 type teacup struct {
-	Port          	uint16
-	DbInfo        	string
-	TlsPair       	*TlsKeyPair
+	Port    uint16
+	DbInfo  string
+	TlsPair *TlsKeyPair
 
-	FileWhitelist 	regexp.Regexp
-	DirBlacklist  	regexp.Regexp
+	FileWhitelist regexp.Regexp
+	DirBlacklist  regexp.Regexp
 
-	Log           	*log.Logger
-	errors     		tcErrors
+	Log    *log.Logger
+	errors tcErrors
 
-	tables 		  	map[string]bool
-	webpages		map[string]dynamicPage
+	tables   map[string]bool
+	webpages map[string]dynamicPage
 }
 
 type dynamicPage struct {
-	template 	*template.Template
-	table 		string
-	fn			func(http.Request, string) interface{}
+	table string
+	fn    func(http.Request, string) (*template.Template, interface{})
 }
 
 type TlsKeyPair struct {
@@ -45,9 +43,8 @@ type PageContents struct {
 	PostDate time.Time
 }
 
-
-func NewTeacup(port uint16, dbInfo string, pair *TlsKeyPair,  fileWhitelist regexp.Regexp, dirBlacklist regexp.Regexp, log *log.Logger) *teacup {
-	t := teacup {
+func NewTeacup(port uint16, dbInfo string, pair *TlsKeyPair, fileWhitelist regexp.Regexp, dirBlacklist regexp.Regexp, log *log.Logger) *teacup {
+	t := teacup{
 		port,
 		dbInfo,
 		pair,
@@ -57,7 +54,6 @@ func NewTeacup(port uint16, dbInfo string, pair *TlsKeyPair,  fileWhitelist rege
 		newTcErrors(),
 		make(map[string]bool),
 		make(map[string]dynamicPage),
-
 	}
 	return &t
 }
@@ -95,10 +91,12 @@ func (t *teacup) servePage(writer http.ResponseWriter, request *http.Request) {
 	for pathRegex := range t.webpages {
 		if regexp.MustCompile(pathRegex).MatchString(path) {
 			dynPage := t.webpages[pathRegex]
-			content := dynPage.fn(*request, t.DbInfo)
-			if content == nil { break }
+			tmpl, content := dynPage.fn(*request, t.DbInfo)
+			if content == nil {
+				break
+			}
 
-			err := dynPage.template.Execute(writer, content)
+			err := tmpl.Execute(writer, content)
 			if t.checkAndLogError(err) {
 				t.serveError(writer, http.StatusBadRequest)
 			}
@@ -109,12 +107,7 @@ func (t *teacup) servePage(writer http.ResponseWriter, request *http.Request) {
 	t.serveFile(writer, request)
 }
 
-func (t *teacup) AddDynamicPage(pathRegex string, table string, tmplFnMap template.FuncMap, fn func(http.Request, string) interface{}, templates ... string) {
+func (t *teacup) AddDynamicPage(pathRegex string, table string, fn func(http.Request, string) (*template.Template, interface{})) {
 	regexp.MustCompile(pathRegex)
-	tmpl := template.Must(template.New("teacup_base").Funcs(tmplFnMap).ParseFiles(templates...))
-	if strings.Contains(tmpl.DefinedTemplates(), `"teacup_base"`) {
-		t.webpages[pathRegex] = dynamicPage{tmpl, table, fn}
-		return
-	}
-	t.Log.Panicln(`Template error: Please define a template with the name "teacup_base"`)
+	t.webpages[pathRegex] = dynamicPage{table, fn}
 }

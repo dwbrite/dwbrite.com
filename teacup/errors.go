@@ -7,18 +7,38 @@ import (
 )
 
 type errorPage struct {
-	Status int
+	Status  int
 	Message string
 }
 
 type tcErrors struct {
-	template *template.Template
+	template      *template.Template
 	errorMessages map[int]string
 }
 
 func newTcErrors() tcErrors {
 	return tcErrors{
-		template.Must(template.New("teacup_error").ParseFiles("teacup/error_template.gohtml")),
+		template.Must(template.New("teacup_error").Parse(`
+{{ define "teacup_error" }}
+<html>
+<head>
+    <style>
+body {
+    text-align: center;
+    margin-top: 240px;
+}
+    </style>
+</head>
+<body>
+<h1>Error {{ .Status }}</h1>
+<h2>{{ .Message }}</h2>
+<footer>
+    Developed by <a href="https://github.com/dwbrite/teacup">Devin Brite</a>.
+</footer>
+</body>
+</html>
+{{ end }}
+`)),
 		map[int]string{
 			http.StatusBadRequest:                   "Bad Request",
 			http.StatusUnauthorized:                 "Unauthorized",
@@ -64,12 +84,12 @@ func newTcErrors() tcErrors {
 	}
 }
 
-func (e *tcErrors) setTemplate(filename string) {
-	e.template = template.Must(template.ParseFiles(filename))
+func (t *teacup) SetErrorTemplate(tmpl *template.Template) {
+	t.errors.template = tmpl
 }
 
-func (e *tcErrors) setErrorText(code int, media string) {
-	e.errorMessages[code] = media
+func (t *teacup) SetErrorText(code int, media string) {
+	t.errors.errorMessages[code] = media
 }
 
 func (t *teacup) serveError(writer http.ResponseWriter, httpStatus int) {
@@ -78,7 +98,7 @@ func (t *teacup) serveError(writer http.ResponseWriter, httpStatus int) {
 		errorPage{
 			httpStatus,
 			t.errors.errorMessages[httpStatus],
-	})
+		})
 
 	t.checkAndLogError(err)
 }

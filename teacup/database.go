@@ -2,9 +2,8 @@ package teacup
 
 import (
 	"database/sql"
-	"strconv"
-	"github.com/lib/pq"
 	"fmt"
+	"github.com/lib/pq"
 )
 
 type orderByPolarity string
@@ -21,14 +20,12 @@ const (
 	Post_date        field = "post_date"
 )
 
-func SelectContentByUid(uid string, table string, dbInfo string) (*PageContents, error) {
+func SelectContentByUid(uid uint32, table string, dbInfo string) (*PageContents, error) {
 	queryRow := func(db sql.DB) (*sql.Row, error) {
-		i_uid, err := strconv.Atoi(uid)
-		if err != nil { return nil, err }
 		return db.QueryRow(fmt.Sprintf(`
 SELECT pa.uid, pa.summary, pa.title, pa.body, pa.post_date 
 FROM %s pa
-WHERE uid = $1;`, pq.QuoteIdentifier(table)), i_uid), nil
+WHERE uid = $1;`, pq.QuoteIdentifier(table)), uid), nil
 	}
 
 	return selectContent(queryRow, dbInfo)
@@ -51,42 +48,49 @@ func SelectMultipleContents(limit uint32, offset uint32, orderby field, polarity
 SELECT pa.uid, pa.summary, pa.title, pa.body, pa.post_date
 FROM %s pa
 ORDER BY %s %s
-OFFSET $1 LIMIT $2;`, pq.QuoteIdentifier(table), pq.QuoteIdentifier(string(orderby)), string(polarity))//Don't follow my example, kids.
+OFFSET $1 LIMIT $2;`, pq.QuoteIdentifier(table), pq.QuoteIdentifier(string(orderby)), string(polarity)) //Don't follow my example, kids.
 		return db.Query(queryStr, offset, limit)
 	}
 
 	return selectContents(queryRows, dbInfo)
 }
 
-func selectContent(queryRow func(db sql.DB) (*sql.Row, error), dbInfo string) (*PageContents, error){
+func selectContent(queryRow func(db sql.DB) (*sql.Row, error), dbInfo string) (*PageContents, error) {
 	db, _ := sql.Open("postgres", dbInfo)
 	defer db.Close()
 
 	var p PageContents
 
 	row, err := queryRow(*db)
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 
 	err = row.Scan(&p.Uid, &p.Summary, &p.Title, &p.Body, &p.PostDate)
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 
 	return &p, nil
 }
 
-func selectContents(queryRows func(db sql.DB) (*sql.Rows, error), dbInfo string) ([]*PageContents, error){
+func selectContents(queryRows func(db sql.DB) (*sql.Rows, error), dbInfo string) ([]*PageContents, error) {
 	db, _ := sql.Open("postgres", dbInfo)
 	defer db.Close()
 
-
 	rows, err := queryRows(*db)
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 
 	var contentArray []*PageContents
 
 	for rows.Next() {
 		var p PageContents
 		err = rows.Scan(&p.Uid, &p.Summary, &p.Title, &p.Body, &p.PostDate)
-		if err != nil { return nil, err }
+		if err != nil {
+			return nil, err
+		}
 
 		contentArray = append(contentArray, &p)
 	}
@@ -112,11 +116,13 @@ func (t *teacup) CreateTable(name string, uniqueTitles bool) {
 		post_date date DEFAULT CURRENT_DATE NOT NULL
 	) WITH (OIDS=FALSE)`)
 
-	if err != nil { t.Log.Fatal(err, "\nTeacup could not connect to postgresql database.") }
+	if err != nil {
+		t.Log.Fatal(err, "\nTeacup could not connect to postgresql database.")
+	}
 
 	_, err = db.Exec(`
 -- Summary function for body.
-CREATE OR REPLACE FUNCTION summary(rec `+ name +`)
+CREATE OR REPLACE FUNCTION summary(rec ` + name + `)
   RETURNS varchar(192)
 LANGUAGE SQL
 AS
@@ -135,7 +141,9 @@ SELECT
            END
 $$;`)
 
-	if err != nil { t.Log.Fatal(err) }
+	if err != nil {
+		t.Log.Fatal(err)
+	}
 
 	t.tables[name] = uniqueTitles
 	//TODO("check for duplicates")
