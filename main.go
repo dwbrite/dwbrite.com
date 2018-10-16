@@ -33,11 +33,10 @@ func main() {
 	t := NewTeacup(
 		41234,
 		"user=devin dbname=dwbrite_com sslmode=disable",
-		&TlsKeyPair{
+		/*&TlsKeyPair{
 			"certs/dwbrite.com.cert",
 			"certs/dwbrite.com.key",
-		},
-
+		},*/nil,
 		*regexp.MustCompile("^/.*\\.(html|css|js|png|jpg|gif|webm|ico|md|mp3|mp4|ttf)$"),
 		*regexp.MustCompile("^/(certs|examples|tmpl)/?.*$"),
 
@@ -61,9 +60,7 @@ func main() {
 }
 
 func formatDate(t time.Time) string {
-	{
-		return t.Format("2006-01-02")
-	}
+	return t.Format("2006-01-02")
 }
 
 func blogQuery(request http.Request, dbInfo string) (*template.Template, interface{}) {
@@ -92,9 +89,21 @@ func blogQuery(request http.Request, dbInfo string) (*template.Template, interfa
 			return nil, nil
 		}
 	} else {
-		posts, err := SelectMultipleContents(limit, limit*blogPosts.PageNum, Post_date, DESC, "posts", dbInfo)
+		var posts []*PageContents
 
-		if err != nil || len(posts) < 1 {
+		if blogPosts.PageNum != 0 {
+			var temp_posts []*PageContents
+			temp_posts, _ = SelectMultipleContents(limit, limit*(blogPosts.PageNum-1), Post_date, ASC, "posts", dbInfo)
+			if temp_posts != nil { // reverse order via prepending
+				for _, p := range temp_posts {
+					posts = append([]*PageContents{p}, posts...)
+				}
+			} else {
+				return nil, nil
+			}
+		}
+
+		if len(posts) < int(1) || blogPosts.PageNum == 0 {
 			posts, _ = SelectMultipleContents(limit, 0, Post_date, DESC, "posts", dbInfo)
 		}
 
