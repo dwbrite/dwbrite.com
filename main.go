@@ -33,10 +33,10 @@ func main() {
 	t := NewTeacup(
 		41234,
 		"user=devin dbname=dwbrite_com sslmode=disable",
-		/*&TlsKeyPair{
+		&TlsKeyPair{
 			"certs/dwbrite.com.cert",
 			"certs/dwbrite.com.key",
-		},*/nil,
+		},
 		*regexp.MustCompile("^/.*\\.(html|css|js|png|jpg|gif|webm|ico|md|mp3|mp4|ttf)$"),
 		*regexp.MustCompile("^/(certs|examples|tmpl)/?.*$"),
 
