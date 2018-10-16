@@ -1,5 +1,14 @@
 {{ define "content" }}
-  {{ range .BlogPosts }}
+  {{ range .Posts }}
     {{ template "subcontent" .}}
   {{ end }}
+  <footer>
+    <a href="?page={{.FirstPage.Value}}"> << </a>
+  {{if .PrevPage}} <a href="?page={{.PrevPage.Value}}"> < </a>
+  {{else}} < {{end}}
+    <a href=""> ^ </a>
+  {{if .NextPage}} <a href="?page={{.NextPage.Value}}"> > </a>
+  {{else}} > {{end}}
+	<a href="/blog"> >> </a>
+  </footer>
 {{ end }}

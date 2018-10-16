@@ -31,7 +31,7 @@ header nav {
     flex-wrap: wrap;
     justify-content: center;
     align-items: stretch;
-    margin: 0.5em auto 2em auto;
+    margin: 0 auto;
 }
 
 header nav ul {
@@ -50,6 +50,7 @@ h1 {
 
 h2 {
     font-size: 1.2em;
+    margin: 0.5em 0 0.25em;
 }
 
 h3, h4, h5, h6 {
@@ -108,7 +109,7 @@ div.post-header {
 
 div.post-header time {
     color: #666;
-    margin-bottom: 0.75em;
+    margin-bottom: 0.5em;
     margin-left: auto;
     font-family: monospace;
     font-feature-settings: "onum" 1;
@@ -119,4 +120,28 @@ div.post-header time {
 html                 { font-family: "Fira Sans Light", sans-serif; }
 h1, h2               { font-family: "Fira Sans SemiBold", sans-serif; }
 h3, h4, h5, h6       { font-family: "Merriweather", serif; }
-div.post-header time { font-family: "Fira Code", monospace; }
+.post-header time    { font-family: "Fira Code", monospace; }
+
+.post-header {
+    margin: 0;
+}
+
+
+article {
+    margin: 2.5em auto 1.5em auto;
+}
+
+p {
+    margin: 1em;
+}
+
+footer {
+    font-family: "Fira Code", "Fira Code Embedded", serif;
+    font-variant-ligatures: normal;
+    border-top: white solid 1px;
+    height: 3em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-top: 1em;
+}

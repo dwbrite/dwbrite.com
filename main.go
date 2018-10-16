@@ -7,6 +7,7 @@ package main
 
 import (
 	. "./teacup"
+	"database/sql"
 	_ "github.com/lib/pq"
 	"html/template"
 	"log"
@@ -18,10 +19,18 @@ import (
 	"time"
 )
 
+type onum struct {
+	Value uint32
+}
+
 type blogPage struct {
-	BlogPosts []*PageContents
+	Posts     []*PageContents
 	Title     string
-	PageNum   uint32
+	CurrPage  *onum
+	FirstPage *onum
+	LastPage  *onum
+	PrevPage  *onum
+	NextPage  *onum
 }
 
 func main() {
@@ -43,7 +52,7 @@ func main() {
 		log.New(file, "", log.LstdFlags|log.Lshortfile),
 	)
 
-	t.CreateTable("posts", false)
+	t.CreateTable("Posts", false)
 	t.CreateTable("projects", true)
 	//t.CreateTable("pages", true)
 
@@ -54,7 +63,7 @@ func main() {
 	t.SetErrorTemplate(errTmpl)
 
 	//"^...?.*?$"
-	t.AddDynamicPage("^/blog/?.*?$", "posts", blogQuery)
+	t.AddDynamicPage("^/blog/?.*?$", "Posts", blogQuery)
 
 	t.StartServer()
 }
@@ -71,19 +80,21 @@ func blogQuery(request http.Request, dbInfo string) (*template.Template, interfa
 	//   If the page doesn't exist, just return the first page.
 
 	var limit uint32 = 5
-	blogPosts := blogPage{
+	blog := blogPage{
 		[]*PageContents{},
 		"Blog",
-		0,
+		nil, nil, nil, nil, nil,
 	}
 
 	query := request.URL.Query()
-	blogPosts.PageNum = queryToUint32(query.Get("page"), 0)
+	postNum := strToOnum(query.Get("post"), 1)
 
-	if query.Get("post") != "" {
-		postUid := queryToUint32(query.Get("post"), 1)
-		post, _ := SelectContentByUid(postUid, "posts", dbInfo)
-		blogPosts.BlogPosts = append(blogPosts.BlogPosts, post)
+	blog.CurrPage = strToOnum(query.Get("page"), 0)
+
+	if postNum != nil {
+		postUid := strToOnum(query.Get("post"), 1)
+		post, _ := SelectContentByUid(postUid.Value, "posts", dbInfo)
+		blog.Posts = append(blog.Posts, post)
 
 		if post == nil {
 			return nil, nil
@@ -91,37 +102,48 @@ func blogQuery(request http.Request, dbInfo string) (*template.Template, interfa
 	} else {
 		var posts []*PageContents
 
-		if blogPosts.PageNum != 0 {
-			var temp_posts []*PageContents
-			temp_posts, _ = SelectMultipleContents(limit, limit*(blogPosts.PageNum-1), Post_date, ASC, "posts", dbInfo)
-			if temp_posts != nil { // reverse order via prepending
-				for _, p := range temp_posts {
-					posts = append([]*PageContents{p}, posts...)
-				}
-			} else {
-				return nil, nil
+		blog.FirstPage = &onum {1 }
+		blog.LastPage = &onum {getNumPages(dbInfo, "posts", limit) }
+
+		if blog.CurrPage == nil {
+			blog.CurrPage = blog.LastPage
+		} else if blog.CurrPage.Value == blog.LastPage.Value {
+			return nil, nil
+		}
+
+		if blog.CurrPage.Value < blog.LastPage.Value {
+			blog.NextPage = &onum { blog.CurrPage.Value +1 }
+		}
+		if blog.CurrPage.Value > blog.FirstPage.Value {
+			blog.PrevPage = &onum { blog.CurrPage.Value -1 }
+		}
+
+		var tempPosts []*PageContents
+		tempPosts, _ = SelectMultipleContents(limit, limit*(blog.CurrPage.Value-1), Post_date, ASC, "posts", dbInfo)
+
+		if tempPosts == nil {
+			return nil, nil
+		} else {
+			for _, p := range tempPosts {
+				posts = append([]*PageContents{p}, posts...)
 			}
 		}
 
-		if len(posts) < int(1) || blogPosts.PageNum == 0 {
-			posts, _ = SelectMultipleContents(limit, 0, Post_date, DESC, "posts", dbInfo)
-		}
-
-		blogPosts.BlogPosts = append(blogPosts.BlogPosts, posts...)
+		blog.Posts = append(blog.Posts, posts...)
 	}
 
 	tmpl := template.Must(template.New("base").
 		Funcs(template.FuncMap{"formatDate": formatDate, "fieldExists": fieldExists}).
 		ParseFiles("tmpl/blogpost.gohtml", "tmpl/blogpage.gohtml", "tmpl/base.gohtml"))
-	return tmpl, blogPosts
+	return tmpl, blog
 }
 
-func queryToUint32(queryParam string, min uint32) uint32 {
-	value, err := strconv.Atoi(queryParam)
+func strToOnum(str string, min uint32) *onum {
+	value, err := strconv.Atoi(str)
 	if err != nil || value < int(min) {
-		return min
+		return nil
 	} else {
-		return uint32(value)
+		return &onum { uint32(value) };
 	}
 }
 
@@ -129,4 +151,21 @@ func fieldExists(name string, obj interface{}) bool {
 	s := reflect.TypeOf(obj)
 	_, b := s.FieldByName(name)
 	return b
+}
+
+func getNumPages(dbInfo string, table string, limit uint32) uint32 {
+	db, _ := sql.Open("postgres", dbInfo)
+	defer db.Close()
+
+	var count int
+	rows := db.QueryRow("SELECT COUNT(*) as count FROM posts;")
+	rows.Scan(&count)
+
+	ct := uint32(count)
+
+	pages := ct/limit
+	if ct%limit != 0 {
+		pages++
+	}
+	return pages
 }
