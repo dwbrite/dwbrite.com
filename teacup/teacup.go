@@ -93,7 +93,8 @@ func (t *teacup) servePage(writer http.ResponseWriter, request *http.Request) {
 			dynPage := t.webpages[pathRegex]
 			tmpl, content := dynPage.fn(*request, t.DbInfo)
 			if content == nil {
-				break
+				http.Redirect(writer, request, request.URL.Path, http.StatusSeeOther)
+				return
 			}
 
 			err := tmpl.Execute(writer, content)
