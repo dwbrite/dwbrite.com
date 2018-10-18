@@ -145,3 +145,9 @@ footer {
     justify-content: space-evenly;
     padding-top: 1em;
 }
+
+button#font-btn {
+    font-family: "Fira Sans SemiBold";
+    position: relative;
+
+}
