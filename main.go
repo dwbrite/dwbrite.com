@@ -78,8 +78,8 @@ func blogQuery(request http.Request, dbInfo string) (*template.Template, interfa
 	// Otherwise
 	//   If a page is requested, return that page.
 	//   If the page doesn't exist, just return the first page.
-
 	var limit uint32 = 5
+
 	blog := blogPage{
 		[]*PageContents{},
 		"Blog",
@@ -88,7 +88,6 @@ func blogQuery(request http.Request, dbInfo string) (*template.Template, interfa
 
 	query := request.URL.Query()
 	postNum := strToOnum(query.Get("post"), 1)
-
 	blog.CurrPage = strToOnum(query.Get("page"), 0)
 
 	if postNum != nil {
@@ -135,6 +134,7 @@ func blogQuery(request http.Request, dbInfo string) (*template.Template, interfa
 	tmpl := template.Must(template.New("base").
 		Funcs(template.FuncMap{"formatDate": formatDate, "fieldExists": fieldExists}).
 		ParseFiles("tmpl/blogpost.gohtml", "tmpl/blogpage.gohtml", "tmpl/base.gohtml"))
+
 	return tmpl, blog
 }
 
