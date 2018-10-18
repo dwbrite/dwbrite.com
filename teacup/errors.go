@@ -59,7 +59,7 @@ body {
 			http.StatusRequestedRangeNotSatisfiable: "Requested Range Not Satisfiable",
 			http.StatusExpectationFailed:            "Expectation Failed",
 			http.StatusTeapot:                       "I'm a teapot",
-			http.StatusMisdirectedRequest:           "Misdirected Request",
+			//http.StatusMisdirectedRequest:           "Misdirected Request",
 			http.StatusUnprocessableEntity:          "Unprocessable Entity",
 			http.StatusLocked:                       "Locked",
 			http.StatusFailedDependency:             "Failed Dependency",
