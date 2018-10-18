@@ -2,13 +2,16 @@
   {{ range .Posts }}
     {{ template "subcontent" .}}
   {{ end }}
+
+  {{if .CurrPage}}
   <footer>
-    <a href="?page={{.FirstPage.Value}}"> << </a>
-  {{if .PrevPage}} <a href="?page={{.PrevPage.Value}}"> < </a>
-  {{else}} < {{end}}
-    <a href=""> ^ </a>
-  {{if .NextPage}} <a href="?page={{.NextPage.Value}}"> > </a>
-  {{else}} > {{end}}
-	<a href="/blog"> >> </a>
+      <a href="/blog"> Newest </a>
+      {{if .NextPage}} <a href="?page={{.NextPage.Value}}"> Newer </a>
+      {{else}} Newer {{end}}
+      <a href="#"> Top </a>
+      {{if .PrevPage}} <a href="?page={{.PrevPage.Value}}"> Older </a>
+      {{else}} Older {{end}}
+      <a href="?page={{.FirstPage.Value}}"> Oldest </a>
   </footer>
+  {{end}}
 {{ end }}
