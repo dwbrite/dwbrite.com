@@ -46,7 +46,7 @@ func main() {
 			"certs/dwbrite.com.cert",
 			"certs/dwbrite.com.key",
 		},
-		*regexp.MustCompile("^/.*\\.(html|css|js|png|jpg|gif|webm|ico|md|mp3|mp4|ttf)$"),
+		*regexp.MustCompile("^/.*\\.(html|css|js|png|jpg|gif|webm|ico|md|mp3|mp4|ttf|woff|woff2|eot)$"),
 		*regexp.MustCompile("^/(certs|examples|tmpl)/?.*$"),
 
 		log.New(file, "", log.LstdFlags|log.Lshortfile),

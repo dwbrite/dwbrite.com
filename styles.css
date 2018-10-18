@@ -39,22 +39,13 @@ header nav ul {
     padding: 0;
 }
 
-h1, h2{
-    font-family: sans-serif;
-    color: white;
-}
+h1, h2{ color: white; }
 
-h1 {
-    font-size: 1.4em;
-}
+h1 { font-size: 1.4em; }
 
 h2 {
     font-size: 1.2em;
     margin: 0.5em 0 0.25em;
-}
-
-h3, h4, h5, h6 {
-    font-family: serif;
 }
 
 a {
@@ -75,6 +66,7 @@ body {
     margin: 50px auto 15px auto;
     padding: 0;
     overflow-wrap: break-word;
+    position: relative;
 
     font-kerning: normal;
 
@@ -89,7 +81,7 @@ body {
             rgba(255, 64, 128, 0) 100%),
     radial-gradient(circle at 100% 50%,
             rgba(255, 255, 255, 1),
-            rgba(255, 255, 255, 0) 100%), no-repeat center center fixed;
+            rgba(255, 255, 255, 0) 100%), #ddd no-repeat center center fixed;
 
     background-size: cover;
     -o-background-size: cover;
@@ -111,16 +103,18 @@ div.post-header time {
     color: #666;
     margin-bottom: 0.5em;
     margin-left: auto;
-    font-family: monospace;
     font-feature-settings: "onum" 1;
     font-size: smaller;
 }
 
 
-html                 { font-family: "Fira Sans Light", sans-serif; }
-h1, h2               { font-family: "Fira Sans SemiBold", sans-serif; }
-h3, h4, h5, h6       { font-family: "Merriweather", serif; }
+html                 { font-family: "Fira Sans", sans-serif; }
+article              { font-family: "Fira Sans Light", "Fira Sans", sans-serif; font-weight: 300; }
+h1, h2               { font-weight: 700; }
+h3, h4, h5, h6       { font-family: "Merriweather", serif; font-weight: 400; }
 .post-header time    { font-family: "Fira Code", monospace; }
+footer               { font-family: "Fira Code", monospace; }
+div.post-header time { font-family: "Fira Code", monospace; }
 
 .post-header {
     margin: 0;
@@ -136,9 +130,7 @@ p {
 }
 
 footer {
-    font-family: "Fira Code", "Fira Code Embedded", serif;
     font-variant-ligatures: normal;
-    border-top: white solid 1px;
     height: 3em;
     display: flex;
     flex-wrap: wrap;
@@ -146,8 +138,21 @@ footer {
     padding-top: 1em;
 }
 
-button#font-btn {
-    font-family: "Fira Sans SemiBold";
-    position: relative;
+button {
+    font-size: 0.8em;
+    font-family: monospace;
+    font-weight: bold;
+    border: rgba(255, 255, 255, 1);
+    border-radius: 0.25em;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-align: center;
+    height: 2em;
+    margin-right: 1em;
+}
 
+button#font-btn {
+    position: absolute;
+    right: 0;
+    font-style: italic;
 }
