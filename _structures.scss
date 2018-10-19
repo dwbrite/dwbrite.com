@@ -1,0 +1,67 @@
+
+html {
+  min-height: 100%;
+}
+
+body {
+  max-width: 44em;
+  margin: 50px auto 15px auto;
+  padding: 0;
+  overflow-wrap: break-word;
+  header#page-header {
+    position: relative;
+    button#font-btn {
+      position: absolute;
+      right: 0;
+    }
+
+    h1#title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      margin: 0 auto;
+      ul {
+        margin: 0 5%;
+        padding: 0;
+      }
+    }
+  }
+}
+
+
+main {
+  margin: auto 1em;
+  article.post {
+    margin: 1.5em auto 2.5em auto;
+    header {
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      time {
+        margin-bottom: 0.5em;
+        margin-left: auto;
+      }
+    }
+  }
+  footer nav#blog {
+    height: 3em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-top: 1em;
+  }
+}
+
+button {
+  text-align: center;
+  height: 2em;
+  margin-right: 1em;
+}

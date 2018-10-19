@@ -1,36 +1,49 @@
-var clicked = false;
-
-if(sessionStorage.getItem("cachedFonts") ==="true") {
+if(sessionStorage.getItem("cachedFonts") === "true") {
     downloadFonts();
+} else {
+    createFontButton();
 }
 
-var dlFontsBtn = document.createElement('button');
-dlFontsBtn.id = "font-btn";
-dlFontsBtn.title = `There's no good way to make sure that you have the fonts, 
-so I guess I'll have to keep this button here forever.`;
-dlFontsBtn.innerHTML = "Click for Fonts";
-
-var body = document.getElementsByTagName("body")[0];
-body.innerHTML = dlFontsBtn.outerHTML + body.innerHTML;
-
-dlFontsBtn = document.getElementById("font-btn");
-dlFontsBtn.onclick = downloadFonts;
-
 function downloadFonts() {
-    if(!clicked) {
-        addFontLink('fonts/Fira/fira.css');
-        addFontLink('fonts/FiraCode/fira_code.css');
-        addFontLink('fonts/Merriweather/merriweather.css');
+    addFontLink('fonts/Fira/fira.css');
+    addFontLink('fonts/FiraCode/fira_code.css');
+    addFontLink('fonts/Merriweather/merriweather.css');
+
+    try {
+        sessionStorage.setItem("cachedFonts", "true");
+    } finally {
+        removeFontButton();
     }
-    clicked = true;
-    sessionStorage.setItem("cachedFonts", "true")
 }
 
 function addFontLink(location) {
-    var head = document.getElementsByTagName('head')[0];
-    var linkStyle = document.createElement('link');
+    // Adds a <link> element for a given font's css file
+    // A font's css file should contain __only__ `@font-face` rules.
+    let head = document.getElementsByTagName('head')[0];
+    let linkStyle = document.createElement('link');
     linkStyle.setAttribute('rel', 'stylesheet');
     linkStyle.setAttribute('type', 'text/css');
     linkStyle.setAttribute('href', location);
     head.appendChild(linkStyle);
+}
+
+function createFontButton() {
+    let dlFontsBtn = document.createElement('button');
+    dlFontsBtn.id = 'font-btn';
+    dlFontsBtn.title = `There's no good way to make sure that you have the fonts, 
+so I guess I'll have to keep this button here forever.`;
+    dlFontsBtn.innerHTML = 'Click for Fonts';
+
+    let pageHeader = document.getElementById('page-header');
+    pageHeader.innerHTML = dlFontsBtn.outerHTML + pageHeader.innerHTML;
+
+    dlFontsBtn = document.getElementById('font-btn');
+    dlFontsBtn.onclick = downloadFonts;
+}
+
+function removeFontButton() {
+    let btn = document.getElementById('font-btn');
+    if (btn !== null) {
+        btn.remove()
+    }
 }

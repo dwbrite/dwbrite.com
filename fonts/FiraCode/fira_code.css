@@ -13,7 +13,7 @@
 @font-face{
     font-family: 'Fira Code';
     src: url('eot/FiraCode-Regular.eot');
-    src: local('Fira Code'),
+    src: local('Fira Code Regular'),
     url('eot/FiraCode-Regular.eot') format('embedded-opentype'),
     url('woff2/FiraCode-Regular.woff2') format('woff2'),
     url('woff/FiraCode-Regular.woff') format('woff'),

@@ -5,13 +5,15 @@
 
   {{if .CurrPage}}
   <footer>
-      <a href="/blog"> Newest </a>
-      {{if .NextPage}} <a href="?page={{.NextPage.Value}}"> Newer </a>
-      {{else}} Newer {{end}}
-      <a href="#"> Top </a>
-      {{if .PrevPage}} <a href="?page={{.PrevPage.Value}}"> Older </a>
-      {{else}} Older {{end}}
-      <a href="?page={{.FirstPage.Value}}"> Oldest </a>
+      <nav id="blog">
+          <a href="/blog">Newest</a>
+          {{if .NextPage}}<a href="?page={{.NextPage.Value}}">Newer</a>
+          {{else}}Newer{{end}}
+          <a href="#">Top</a>
+          {{if .PrevPage}}<a href="?page={{.PrevPage.Value}}">Older</a>
+          {{else}}Older{{end}}
+          <a href="?page={{.FirstPage.Value}}">Oldest</a>
+      </nav>
   </footer>
   {{end}}
 {{ end }}
