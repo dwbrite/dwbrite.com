@@ -35,16 +35,19 @@ body header#page-header nav ul {
 main {
   margin: auto 1em;
 }
-main article.post {
+main article {
   margin: 1.5em auto 2.5em auto;
 }
-main article.post header {
+main article p {
+  margin: 1em;
+}
+main article header {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
 }
-main article.post header time {
+main article header time {
   margin-bottom: 0.5em;
   margin-left: auto;
 }

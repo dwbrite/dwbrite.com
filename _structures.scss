@@ -38,8 +38,11 @@ body {
 
 main {
   margin: auto 1em;
-  article.post {
+  article {
     margin: 1.5em auto 2.5em auto;
+    p {
+      margin: 1em;
+    }
     header {
       margin: 0;
       display: flex;
