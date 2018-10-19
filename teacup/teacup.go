@@ -22,12 +22,7 @@ type teacup struct {
 	errors tcErrors
 
 	tables   map[string]bool
-	webpages map[string]dynamicPage
-}
-
-type dynamicPage struct {
-	table string
-	fn    func(http.Request, string) (*template.Template, interface{})
+	webpages map[string]func(http.Request, string) (*template.Template, interface{})
 }
 
 type TlsKeyPair struct {
@@ -53,7 +48,7 @@ func NewTeacup(port uint16, dbInfo string, pair *TlsKeyPair, fileWhitelist regex
 		log,
 		newTcErrors(),
 		make(map[string]bool),
-		make(map[string]dynamicPage),
+		make(map[string]func(http.Request, string) (*template.Template, interface{})),
 	}
 	return &t
 }
@@ -74,7 +69,7 @@ func (t *teacup) matchRequest(writer http.ResponseWriter, request *http.Request)
 	case t.DirBlacklist.MatchString(path):
 		t.serveError(writer, http.StatusForbidden)
 	default:
-		t.servePage(writer, request)
+		t.serveContent(writer, request)
 	}
 }
 
@@ -86,12 +81,12 @@ func (t *teacup) serveFile(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func (t *teacup) servePage(writer http.ResponseWriter, request *http.Request) {
+func (t *teacup) serveContent(writer http.ResponseWriter, request *http.Request) {
 	path := request.URL.Path
 	for pathRegex := range t.webpages {
 		if regexp.MustCompile(pathRegex).MatchString(path) {
 			dynPage := t.webpages[pathRegex]
-			tmpl, content := dynPage.fn(*request, t.DbInfo)
+			tmpl, content := dynPage(*request, t.DbInfo)
 			if content == nil {
 				http.Redirect(writer, request, request.URL.Path, http.StatusSeeOther)
 				return
@@ -110,5 +105,10 @@ func (t *teacup) servePage(writer http.ResponseWriter, request *http.Request) {
 
 func (t *teacup) AddDynamicPage(pathRegex string, table string, fn func(http.Request, string) (*template.Template, interface{})) {
 	regexp.MustCompile(pathRegex)
-	t.webpages[pathRegex] = dynamicPage{table, fn}
+	t.webpages[pathRegex] = fn
 }
+func (t *teacup) AddStaticPage(pathRegex string, fn func(http.Request, string) (*template.Template, interface{})) {
+	regexp.MustCompile(pathRegex)
+	t.webpages[pathRegex] = fn
+}
+
