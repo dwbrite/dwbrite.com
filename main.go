@@ -10,6 +10,7 @@ import (
 	"database/sql"
 	_ "github.com/lib/pq"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -33,6 +34,11 @@ type blogPage struct {
 	NextPage  *onum
 }
 
+type staticPage struct {
+	Title string
+	StaticContent template.HTML
+}
+
 func main() {
 	file, err := os.Create("dwbrite.com.log")
 	if err != nil {
@@ -46,26 +52,49 @@ func main() {
 			"certs/dwbrite.com.cert",
 			"certs/dwbrite.com.key",
 		},
-		*regexp.MustCompile("^/.*\\.(html|css|scss|css\\.map|js|png|jpg|gif|webm|ico|md|mp3|mp4|ttf|woff|woff2|eot)$"),
+		*regexp.MustCompile("^/.*\\.(html|css|scss|map|js|png|jpg|gif|webm|ico|md|mp3|mp4|ttf|woff|woff2|eot)$"),
 		*regexp.MustCompile("^/(certs|examples|tmpl)/?.*$"),
 
 		log.New(file, "", log.LstdFlags|log.Lshortfile),
 	)
 
-	t.CreateTable("Posts", false)
+	t.CreateTable("posts", false)
 	t.CreateTable("projects", true)
 	//t.CreateTable("pages", true)
 
 	// error template
 	errTmpl := template.Must(template.New("base").
 		Funcs(template.FuncMap{"fieldExists": fieldExists}).
-		ParseFiles("tmpl/page.gohtml", "tmpl/base.gohtml"))
+		ParseFiles("tmpl/errors.gohtml", "tmpl/base.gohtml"))
 	t.SetErrorTemplate(errTmpl)
 
 	//"^...?.*?$"
-	t.AddDynamicPage("^/blog/?.*?$", "Posts", blogQuery)
+	t.AddDynamicPage("^/blog/?.*?$", "posts", blogQuery)
+	t.AddDynamicPage("^/portfolio/?.*?$", "posts", projectQuery)
+	t.AddStaticPage("^(/home/?|/)?$", home)
 
 	t.StartServer()
+}
+func home(_ http.Request, _ string) (*template.Template, interface{}) {
+	pageTmpl := template.Must(template.New("base").
+		Funcs(template.FuncMap{"fieldExists": fieldExists}).
+		ParseFiles("tmpl/static.gohtml", "tmpl/base.gohtml"))
+
+	content, err := ioutil.ReadFile("home.html")
+	if err != nil {
+		return nil, nil
+	}
+
+	home := staticPage {
+		"Home Page",
+		template.HTML(string(content)),
+	}
+
+	return pageTmpl, home
+}
+
+func projectQuery(request http.Request, dbInfo string) (*template.Template, interface{}) {
+	return nil, nil;
 }
 
 func formatDate(t time.Time) string {
@@ -102,7 +131,7 @@ func blogQuery(request http.Request, dbInfo string) (*template.Template, interfa
 		var posts []*PageContents
 
 		blog.FirstPage = &onum {1 }
-		blog.LastPage = &onum {getNumPages(dbInfo, "posts", limit) }
+		blog.LastPage = &onum {calcNumBlogPages(dbInfo, limit) }
 
 		if blog.CurrPage == nil {
 			blog.CurrPage = blog.LastPage
@@ -153,12 +182,12 @@ func fieldExists(name string, obj interface{}) bool {
 	return b
 }
 
-func getNumPages(dbInfo string, table string, limit uint32) uint32 {
+func calcNumBlogPages(dbInfo string, limit uint32) uint32 {
 	db, _ := sql.Open("postgres", dbInfo)
 	defer db.Close()
 
 	var count int
-	rows := db.QueryRow("SELECT COUNT(*) as count FROM posts;")
+	rows := db.QueryRow("SELECT COUNT(*) as count FROM posts")
 	rows.Scan(&count)
 
 	ct := uint32(count)

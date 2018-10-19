@@ -4,7 +4,7 @@
     <h2><a href="/blog?post={{$.Uid}}" id="{{$.Title}}">{{$.Title}}</a></h2>
     <time datetime="{{.PostDate | formatDate }}">{{.PostDate | formatDate }}</time>
   </header>
-  <p>{{$.Body}}</p>
+  {{$.Body}}
 </article>
 {{ end }}
 
