@@ -107,7 +107,7 @@ func blogQuery(request http.Request, dbInfo string) (*template.Template, interfa
 	// Otherwise
 	//   If a page is requested, return that page.
 	//   If the page doesn't exist, just return the first page.
-	var limit uint32 = 5
+	var limit uint32 = 3
 
 	blog := blogPage{
 		[]*PageContents{},
