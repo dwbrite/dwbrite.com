@@ -62,7 +62,14 @@ main footer nav#blog {
 button {
   text-align: center;
   height: 2em;
-  margin-right: 1em;
+  margin: 0.5em 1em;
+}
+
+div.media-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (min-width: 320px) {
