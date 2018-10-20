@@ -75,3 +75,16 @@ div.media-div {
   align-items: center;
   justify-content: center;
 }
+
+@media
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi){
+  a.media-anchor {
+    width: 100%;
+    height: auto;
+    img.media-img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
