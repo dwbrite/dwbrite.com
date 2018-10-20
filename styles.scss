@@ -58,11 +58,17 @@ time {
 
 button{
   border: #ffff;
-  border-radius: 0.25em;
+  border-radius: 0.18em;
   background: #fff3;
   color: $text-light;
 }
 
 h1 {
   color: $text-light;
+}
+
+img {
+  image-rendering: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }

@@ -72,6 +72,16 @@ div.media-div {
   justify-content: center;
 }
 
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  a.media-anchor {
+    width: 100%;
+    height: auto;
+  }
+  a.media-anchor img.media-img {
+    width: 100%;
+    height: auto;
+  }
+}
 @media screen and (min-width: 320px) {
   #avatar {
     width: 96px;
@@ -198,13 +208,19 @@ time {
 
 button {
   border: #ffff;
-  border-radius: 0.25em;
+  border-radius: 0.18em;
   background: #fff3;
   color: #fff;
 }
 
 h1 {
   color: #fff;
+}
+
+img {
+  image-rendering: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 /*# sourceMappingURL=styles.css.map */
