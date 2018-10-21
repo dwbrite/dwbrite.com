@@ -73,11 +73,18 @@ div.media-div {
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  html button {
+    height: 72px;
+    font-size: 0.9em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
   a.media-anchor {
     width: 100%;
     height: auto;
   }
-  a.media-anchor img.media-img {
+  a.media-anchor img.media-content {
     width: 100%;
     height: auto;
   }
