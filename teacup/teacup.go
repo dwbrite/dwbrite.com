@@ -94,7 +94,7 @@ func (t *teacup) serveContent(writer http.ResponseWriter, request *http.Request)
 
 			err := tmpl.Execute(writer, content)
 			if t.checkAndLogError(err) {
-				t.serveError(writer, http.StatusBadRequest)
+				t.serveError(writer, http.StatusInternalServerError)
 			}
 			return
 		}
@@ -103,11 +103,7 @@ func (t *teacup) serveContent(writer http.ResponseWriter, request *http.Request)
 	t.serveFile(writer, request)
 }
 
-func (t *teacup) AddDynamicPage(pathRegex string, table string, fn func(http.Request, string) (*template.Template, interface{})) {
-	regexp.MustCompile(pathRegex)
-	t.webpages[pathRegex] = fn
-}
-func (t *teacup) AddStaticPage(pathRegex string, fn func(http.Request, string) (*template.Template, interface{})) {
+func (t *teacup) AddTemplateContent(pathRegex string, fn func(http.Request, string) (*template.Template, interface{})) {
 	regexp.MustCompile(pathRegex)
 	t.webpages[pathRegex] = fn
 }

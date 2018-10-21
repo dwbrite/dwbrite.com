@@ -69,9 +69,9 @@ func main() {
 	t.SetErrorTemplate(errTmpl)
 
 	//"^...?.*?$"
-	t.AddDynamicPage("^/blog/?.*?$", "posts", blogQuery)
-	t.AddDynamicPage("^/portfolio/?.*?$", "posts", projectQuery)
-	t.AddStaticPage("^(/home/?|/)?$", home)
+	t.AddTemplateContent("^/blog/?.*?$", blogQuery)
+	t.AddTemplateContent("^/portfolio/?.*?$", projectQuery)
+	t.AddTemplateContent("^/(home/?)?$", home)
 
 	t.StartServer()
 }
