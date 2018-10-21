@@ -1,67 +1,60 @@
+var mediaElements = document.getElementsByClassName("media-noscript");
+let length = mediaElements.length;
 
-var srcs;
-initImages();
-
-function initImages()
-{
-  var nscrpt = document.getElementsByClassName("media-noscript");
-  var length = nscrpt.length;
-  srcs = new Array(length);
-  for (i = 0; i < length; i++) {
-  
-    var btn = document.createElement("button");
+for (i = 0; i < length; i++) {
+    let btn = document.createElement("button");
     btn.innerHTML = "load media";
-    btn.setAttribute("onclick", "showbtn("+i+");");
+    btn.setAttribute("onclick", "loadMedia("+i+");");
     btn.setAttribute("id", "media-btn-"+i);
     btn.setAttribute("class", "media-btn");
     btn.setAttribute("type", "button");
-    btn.setAttribute("title", "Load Content");
-  
-    var div = document.createElement("div");
-    div.setAttribute("class", "media-div");
-  
-    var img = document.createElement("img");
-    img.setAttribute("id", "media-img-"+i);
-    img.setAttribute("class", "media-img");
 
-    var a = document.createElement("a");
+    let div = document.createElement("div");
+    div.setAttribute("class", "media-div");
+
+    div.appendChild(btn);
+    mediaElements[i].insertAdjacentElement("afterend", div);
+}
+
+function loadMedia(i) {
+    let btn = document.getElementById("media-btn-"+i);
+    btn.setAttribute("onclick", "hideMedia("+i+");");
+    btn.innerHTML = "hide media";
+
+    let div = btn.parentElement;
+
+    // The following is a hack to get around
+    // JS not seeing children of <noscript> elements.
+    let temp = document.createElement("div");
+    temp.innerHTML = mediaElements[i].innerHTML;
+    let child = temp.firstElementChild;
+    child.setAttribute("class", "media-content");
+
+    let src = child.getAttribute("src");
+
+    let a = document.createElement("a");
     a.setAttribute("id", "media-anchor-"+i);
     a.setAttribute("class", "media-anchor");
-    a.appendChild(img);
-  
-    div.appendChild(btn);
+    a.setAttribute("href", src);
+    a.appendChild(child);
+
     div.appendChild(a);
-  
-    srcs[i] = nscrpt[i].getAttribute("id");
-  	nscrpt[i].parentElement.insertBefore(div, nscrpt[i]);
-  }
 }
 
-function showbtn(i) {
-    var button = document.getElementById("media-btn-"+i);
-    button.setAttribute("onclick", "hidebtn("+i+");");
-    button.innerHTML = "hide media";
-    button.setAttribute("title", "Hide Content");
+function showMedia(i) {
+    let btn = document.getElementById("media-btn-"+i);
+    btn.setAttribute("onclick", "hideMedia("+i+");");
+    btn.innerHTML = "hide media";
 
-    var a = document.getElementById("media-anchor-"+i);
-    a.setAttribute("href", srcs[i]);
+    let a = document.getElementById("media-anchor-"+i);
     a.setAttribute("style", "display:block");
-
-    var img = document.getElementById("media-img-"+i);
-    img.setAttribute("src", srcs[i]);
 }
 
-function hidebtn(i) {
-    var button = document.getElementById("media-btn-"+i);
-    button.setAttribute("onclick", "showbtn("+i+");");
-    button.innerHTML = "view media";
-    button.setAttribute("title", "View Content");
+function hideMedia(i) {
+    let btn = document.getElementById("media-btn-"+i);
+    btn.setAttribute("onclick", "showMedia("+i+");");
+    btn.innerHTML = "view media";
 
-    var a = document.getElementById("media-anchor-"+i);
-    //img.removeAttribute("src");
+    let a = document.getElementById("media-anchor-"+i);
     a.setAttribute("style", "display:none");
-
-    //var img = document.getElementById("media-img-"+i);
-    //img.removeAttribute("src");
-    //img.setAttribute("style", "display:none");
 }
