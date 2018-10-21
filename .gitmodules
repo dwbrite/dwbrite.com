@@ -1,0 +1,3 @@
+[submodule "teacup"]
+	path = teacup
+	url = git@github.com:dwbrite/teacup.git

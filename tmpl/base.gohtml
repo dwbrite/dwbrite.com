@@ -1,7 +1,7 @@
 {{ define "base" }}
 <html>
 <head>
-	<link rel="stylesheet" href="/styles.css"/>
+	<link rel="stylesheet" href="/resources/styles.css"/>
 	<title>{{if fieldExists "Title" .}}dwbrite's {{.Title}}{{else}}{{.Status}}{{end}}</title>
 </head>
 
@@ -9,7 +9,7 @@
   <header id="page-header">
     <h1 id="title">
       <a href="/">
-        <img id="avatar" src="/Avatar64.png"/>
+        <img id="avatar" src="/resources/media/Avatar64.png"/>
       </a>
       {{if fieldExists "Title" .}}dwbrite's {{.Title}}{{else}}{{.Status}}{{end}}
     </h1>
@@ -24,8 +24,8 @@
     {{ template "content" .}}
   </main>
 </body>
-<script type="text/javascript" src="/slow_renderer.js" defer></script>
-<script type="text/javascript" src="/add_fonts.js" defer></script>
-<script type="text/javascript" src="/imageLoader.js" defer></script>
+<script type="text/javascript" src="/resources/scripts/slow_renderer.js" defer></script>
+<script type="text/javascript" src="/resources/scripts/add_fonts.js" defer></script>
+<script type="text/javascript" src="/resources/scripts/imageLoader.js" defer></script>
 </html>
 {{ end }}
