@@ -1,0 +1,233 @@
+html {
+  min-height: 100%;
+}
+
+body {
+  max-width: 44em;
+  margin: 50px auto 15px auto;
+  padding: 0;
+  overflow-wrap: break-word;
+}
+body header#page-header {
+  position: relative;
+}
+body header#page-header button#font-btn {
+  position: absolute;
+  right: 0;
+}
+body header#page-header h1#title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body header#page-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0 auto;
+}
+body header#page-header nav ul {
+  margin: 0 5%;
+  padding: 0;
+}
+
+main {
+  margin: auto 1em;
+}
+main article {
+  margin: 1.5em auto 2.5em auto;
+}
+main article p {
+  margin: 1em;
+}
+main article header {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+main article header time {
+  margin-bottom: 0.5em;
+  margin-left: auto;
+}
+main footer nav#blog {
+  height: 3em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-top: 1em;
+}
+
+button {
+  text-align: center;
+  height: 2em;
+  margin: 0.5em 1em;
+}
+
+div.media-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  html button {
+    height: 72px;
+    font-size: 0.9em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  a.media-anchor {
+    width: 100%;
+    height: auto;
+  }
+  a.media-anchor img.media-content {
+    width: 100%;
+    height: auto;
+  }
+}
+@media screen and (min-width: 320px) {
+  #avatar {
+    width: 96px;
+  }
+
+  body {
+    font-size: calc(1.5rem + 1vw);
+  }
+}
+@media screen and (min-width: 768px) {
+  body {
+    font-size: calc(1rem + 0.75vw);
+  }
+}
+@media screen and (min-width: 1080px) {
+  #avatar {
+    width: 64px;
+  }
+
+  body {
+    font-size: 19px;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  html body {
+    font-size: 2em;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+  html body {
+    font-size: 2.3em;
+  }
+}
+html {
+  font-family: "Fira Sans", sans-serif;
+  font-variant-ligatures: normal;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  -webkit-text-size-adjust: none;
+}
+
+article {
+  font-family: "Fira Sans Light", "Fira Sans", sans-serif;
+  font-weight: 300;
+}
+
+nav#blog, button, .post-header {
+  font-family: "Fira Code", monospace;
+}
+nav#blog time, button time, .post-header time {
+  font-feature-settings: "onum" 1;
+  font-size: smaller;
+}
+
+button {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+button #font-btn {
+  font-style: italic;
+}
+
+h1, h2 {
+  font-family: "Fira Sans", sans-serif;
+  font-weight: bold;
+  margin: 0.5em 0 0.25em;
+}
+
+h3, h4 {
+  font-family: "Merriweather", serif;
+}
+
+h1 {
+  font-size: 1.4em;
+}
+
+h2 {
+  font-size: 1.2em;
+}
+
+h3 {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1em;
+  font-style: italic;
+}
+
+body {
+  background: radial-gradient(circle at -20% -20%, #f80b, #8842 70%), radial-gradient(circle at 25% 125%, #0cf7, #4ff0 70%), radial-gradient(circle at 150% 50%, #80f6, #f480 100%), radial-gradient(circle at 100% 50%, #ffff, #fff0 100%), #ddd no-repeat center center fixed;
+  background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  color: #444;
+}
+body#mobile-webkit {
+  background: linear-gradient(-50deg, rgba(104, 32, 96, 0.6), rgba(255, 128, 0, 0.5)), #FEF;
+}
+
+#avatar {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+}
+
+a {
+  color: #346d99;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:active {
+  color: #d60;
+}
+
+time {
+  color: #666;
+}
+
+button {
+  border: #ffff;
+  border-radius: 0.18em;
+  background: #fff3;
+  color: #fff;
+}
+
+h1 {
+  color: #fff;
+}
+
+img {
+  image-rendering: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/*# sourceMappingURL=styles.css.map */

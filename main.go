@@ -6,9 +6,8 @@
 package main
 
 import (
-	. "./teacup"
 	"database/sql"
-	_ "github.com/lib/pq"
+	. "github.com/dwbrite/teacup"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -60,7 +59,6 @@ func main() {
 
 	t.CreateTable("posts", false)
 	t.CreateTable("projects", true)
-	//t.CreateTable("pages", true)
 
 	// error template
 	errTmpl := template.Must(template.New("base").
