@@ -1,8 +1,10 @@
 {{ define "base" }}
 <html>
 <head>
-	<link rel="stylesheet" href="/resources/styles.css"/>
-	<title>{{if fieldExists "Title" .}}dwbrite's {{.Title}}{{else}}{{.Status}}{{end}}</title>
+  <link rel="stylesheet" href="/resources/styles.css"/>
+  <link rel="shortcut icon" type="image/png" href="/resources/favicon.png"/>
+  <link rel='shortcut icon' type='image/x-icon' href='/resources/favicon.ico' />
+  <title>{{if fieldExists "Title" .}}dwbrite's {{.Title}}{{else}}{{.Status}}{{end}}</title>
 </head>
 
 <body>
