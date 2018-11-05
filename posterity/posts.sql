@@ -369,7 +369,7 @@ VALUES('November Has Come',
        'I still can’t find a suitable terminal or file manager. ' ||
        'These are two things that macOS seem to get right, but which no-one else can.</p>' ||
        '' ||
-       '<p>Ligatures! I love them. The moz://a foundation is a developer’s best friend. ' ||
+       '<p>Ligatures! I love them. The mozilla foundation is a developer’s best friend. ' ||
        'FiraMono/FiraCode. Rust. Firefox nightly. Just&hellip; Everything. ' ||
        'They’re so great right now! I’m glad all their efforts are catching up to them :)</p>' ||
        '' ||
