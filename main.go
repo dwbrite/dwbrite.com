@@ -108,12 +108,12 @@ func projectQuery(_ http.Request, _ string) (*TemplateContent, error) {
 		return nil, nil
 	}
 
-	home := staticPage {
+	construction := staticPage {
 		"Portfolio",
 		template.HTML(string(content)),
 	}
 
-	return &TemplateContent{ pageTmpl, home }, nil
+	return &TemplateContent{ pageTmpl, construction}, nil
 }
 
 func formatDate(t time.Time) string {
