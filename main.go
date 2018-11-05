@@ -85,7 +85,7 @@ func home(_ http.Request, _ string) (*TemplateContent, error) {
 		Funcs(template.FuncMap{"fieldExists": fieldExists}).
 		ParseFiles("tmpl/static.gohtml", "tmpl/base.gohtml"))
 
-	content, err := ioutil.ReadFile("home.html")
+	content, err := ioutil.ReadFile("home.xml")
 	if err != nil {
 		return nil, nil
 	}
@@ -99,7 +99,21 @@ func home(_ http.Request, _ string) (*TemplateContent, error) {
 }
 
 func projectQuery(_ http.Request, _ string) (*TemplateContent, error) {
-	return nil, nil
+	pageTmpl := template.Must(template.New("base").
+		Funcs(template.FuncMap{"fieldExists": fieldExists}).
+		ParseFiles("tmpl/static.gohtml", "tmpl/base.gohtml"))
+
+	content, err := ioutil.ReadFile("construction.xml")
+	if err != nil {
+		return nil, nil
+	}
+
+	home := staticPage {
+		"Portfolio",
+		template.HTML(string(content)),
+	}
+
+	return &TemplateContent{ pageTmpl, home }, nil
 }
 
 func formatDate(t time.Time) string {
