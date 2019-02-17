@@ -101,6 +101,9 @@ html {
 article {
   font-family: "Fira Sans Light", "Fira Sans", sans-serif;
   font-weight: 300; }
+  article b, article em {
+    font-weight: 300;
+    text-shadow: 0.35px 0.35px #444; }
 
 nav#blog, button, .post-header {
   font-family: "Fira Code", monospace; }
@@ -144,7 +147,7 @@ body {
   -webkit-background-size: cover;
   color: #444; }
   body#mobile-webkit {
-    background: linear-gradient(-40deg, rgba(60, 79, 204, 0.45), rgba(255, 105, 0, 0.45)), #FCC; }
+    background: linear-gradient(-45deg, rgba(60, 79, 255, 0.2), rgba(255, 80, 0, 0.2)), #FCC; }
 
 #avatar {
   image-rendering: -moz-crisp-edges;
