@@ -6,7 +6,7 @@
 package main
 
 import (
-	. "./teacup"
+	. "github.com/dwbrite/teacup"
 	"database/sql"
 	"html/template"
 	"io/ioutil"
