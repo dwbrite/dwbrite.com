@@ -5,9 +5,9 @@ if(sessionStorage.getItem("cachedFonts") === "true") {
 }
 
 function downloadFonts() {
-    addFontLink('fonts/Fira/fira.css');
-    addFontLink('fonts/FiraCode/fira_code.css');
-    addFontLink('fonts/Merriweather/merriweather.css');
+    addFontLink('/resources/fonts/Fira/fira.css');
+    addFontLink('/resources/fonts/FiraCode/fira_code.css');
+    addFontLink('/resources/fonts/Merriweather/merriweather.css');
 
     try {
         sessionStorage.setItem("cachedFonts", "true");
