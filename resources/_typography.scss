@@ -1,6 +1,6 @@
 $face-big: "Fira Sans", sans-serif;
 $face-medium: "Merriweather", serif;
-$face-small: "Fira Sans Light", sans-serif;
+$face-small: "Fira Sans Light", "Fira Sans", sans-serif;
 $face-code: "Fira Code", monospace;
 
 @media screen and (min-width: 320px) {
@@ -40,7 +40,7 @@ $face-code: "Fira Code", monospace;
 }
 
 html {
-  font-family: "Fira Sans", sans-serif;
+  font-family: $face-big;
   font-variant-ligatures: normal;
   font-feature-settings: "kern" 1;
   font-kerning: normal;
@@ -48,12 +48,16 @@ html {
 }
 
 article {
-  font-family: "Fira Sans Light", "Fira Sans", sans-serif;
+  font-family: $face-small;
   font-weight: 300;
+  b, em {
+    font-weight: 300;
+    text-shadow: 0.35px 0.35px #444;
+  }
 }
 
 nav#blog, button, .post-header {
-  font-family: "Fira Code", monospace;
+  font-family: $face-code;
   time {
     font-feature-settings: "onum" 1;
     font-size: smaller;
