@@ -43,6 +43,7 @@ html {
   font-family: $face-big;
   font-variant-ligatures: normal;
   font-feature-settings: "kern" 1;
+  font-feature-settings: "zero" 1;
   font-kerning: normal;
   -webkit-text-size-adjust: none;
 }
@@ -59,7 +60,6 @@ article {
 nav#blog, button, .post-header {
   font-family: $face-code;
   time {
-    font-feature-settings: "onum" 1;
     font-size: smaller;
   }
 }
