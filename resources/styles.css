@@ -95,6 +95,7 @@ html {
   font-family: "Fira Sans", sans-serif;
   font-variant-ligatures: normal;
   font-feature-settings: "kern" 1;
+  font-feature-settings: "zero" 1;
   font-kerning: normal;
   -webkit-text-size-adjust: none; }
 
@@ -108,7 +109,6 @@ article {
 nav#blog, button, .post-header {
   font-family: "Fira Code", monospace; }
   nav#blog time, button time, .post-header time {
-    font-feature-settings: "onum" 1;
     font-size: smaller; }
 
 button {
