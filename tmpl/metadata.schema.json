@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+
+  "definitions": {
+    "data_basic": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" }
+      },
+      "required": ["title"]
+    },
+
+    "data_blog": { "type": "null" },
+    "data_blogpost": { "type": "null" },
+    "data_construction": { "type": "null" },
+    "data_raw": { "type": "null" },
+    "data_resource": { "type": "null" }
+  },
+
+
+
+  "type": "object",
+  "properties": {
+    "archetype": {
+      "type": "string",
+      "enum": ["basic", "blog", "blogpost", "construction", "raw", "resource"],
+      "description": "The type of content represented in a directory."
+    },
+    "data": {
+      "description": "A placeholder for archetype-specific data"
+    }
+  },
+
+
+  "allOf": [
+    {
+      "if": {"properties": {"archetype": {"const": "basic"}}},
+      "then": {
+        "properties": {
+          "data": {
+            "$ref": "#/definitions/data_basic"
+          }
+        },
+        "required": ["data"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "archetype": { "const": "blog"}}
+      },
+      "then": {
+        "properties": {"data": {"$ref": "#/definitions/data_blog"}}
+      }
+    },
+    {
+      "if": {
+        "properties": {"archetype": {"const": "blogpost"}}
+      },
+      "then": {
+        "properties": {"data": {"$ref": "#/definitions/data_blogpost"}}
+      }
+    },
+    {
+      "if": {
+        "properties": {"archetype": {"const": "construction"}}
+      },
+      "then": {
+        "properties": { "data": { "$ref": "#/definitions/data_construction" }}
+      }
+    },
+    {
+      "if": {
+        "properties": { "archetype": { "const":  "raw"}}
+      },
+      "then": {
+        "properties": { "data": { "$ref": "#/definitions/data_raw"}}
+      }
+    },
+    {
+      "if": {
+        "properties": { "archetype": { "const":  "resource"}}
+      },
+      "then": {
+        "properties": { "data": { "$ref": "#/definitions/data_resource"}}
+      }
+    }
+  ]
+}
