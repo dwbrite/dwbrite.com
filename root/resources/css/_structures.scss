@@ -17,12 +17,12 @@ html {
     max-width: 44em;
     margin: 50px auto 0 auto;
     padding: 0;
-    overflow-wrap: break-word;
 
     header#page-header {
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin: auto 1.5em;
 
       button#font-btn {
         position: absolute;
@@ -34,7 +34,7 @@ html {
         max-width: 24em;
         display: flex;
 
-        ul {
+        a {
           flex: 1 1 0;
           text-align: center;
           margin: 0; padding: 0;
@@ -49,12 +49,13 @@ html {
       height: $footer-size;
       overflow: hidden;
       flex-direction: row-reverse;
+      margin: 0 1.5em;
     }
   }
 
   button {
     text-align: center;
-    height: 2em;
+    height: 2.5em;
     margin: 0.5em 1em;
   }
 
@@ -120,7 +121,8 @@ article.project-card {
   div.project-main {
     img.project-thumbnail {
       max-height: 160px;
-      max-width: 285px;
+      width: 285px;
+      max-width: 33%;
       margin: 1em;
     }
   }
@@ -130,25 +132,5 @@ article.project-card {
 article#project {
   img {
     max-width: 100%;
-  }
-}
-
-@media
-(-webkit-min-device-pixel-ratio: 1.25),
-(min-resolution: 120dpi){
-  html button {
-    height: 72px;
-    font-size: 0.9em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  a.media-anchor {
-    width: 100%;
-    height: auto;
-    img.media-content {
-      width: 100%;
-      height: auto;
-    }
   }
 }

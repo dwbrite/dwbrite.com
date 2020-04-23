@@ -30,9 +30,8 @@ function addFontLink(location) {
 function createFontButton() {
     let dlFontsBtn = document.createElement('button');
     dlFontsBtn.id = 'font-btn';
-    dlFontsBtn.title = `There's no good way to make sure that you have the fonts, 
-so I guess I'll have to keep this button here forever.`;
-    dlFontsBtn.innerHTML = 'Click for Fonts';
+    dlFontsBtn.title = `Link font css `;
+    dlFontsBtn.innerHTML = 'load fonts';
 
     let pageHeader = document.getElementById('page-header');
     pageHeader.innerHTML = dlFontsBtn.outerHTML + pageHeader.innerHTML;

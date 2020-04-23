@@ -22,14 +22,14 @@ body {
 
   color: $text-dark;
 
-  &#mobile-webkit {
-    //old webkit doesn't recognize simplified rgba hex colors.
-    //background: linear-gradient(90deg, #f80b, #FBE, #80f6), #FCC;
-    background:
-            radial-gradient(circle at -20% -20%, #f80b, #8842 70%),
-            radial-gradient(circle at 75% 125%, #a6f6, #f4c0 100%),
-            #ddd no-repeat center center fixed;
-  }
+  //&#mobile-webkit {
+  //  //old webkit doesn't recognize simplified rgba hex colors.
+  //  //background: linear-gradient(90deg, #f80b, #FBE, #80f6), #FCC;
+  //  background:
+  //          radial-gradient(circle at -20% -20%, #f80b, #8842 70%),
+  //          radial-gradient(circle at 75% 125%, #a6f6, #f4c0 100%),
+  //          #ddd no-repeat center center fixed;
+  //}
 }
 
 #avatar {

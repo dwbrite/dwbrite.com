@@ -3,52 +3,37 @@ $face-serif: "Merriweather", serif;
 $face-code: "Fira Code", monospace;
 
 @media screen and (min-width: 320px) {
-  #avatar { width: 96px; }
   body {
-    font-size: calc(1.5rem + 1vw);
-  }
-}
-
-@media screen and (min-width: 768px) {
-  body {
-    font-size: calc(1rem + 0.75vw);
+    font-size: calc(1.2rem);
   }
 }
 
 @media screen and (min-width: 1080px) {
   #avatar { width: 64px; }
-  body {
-    font-size: 19px;
-  }
+  body { font-size: 19px; }
 }
 
-@media
-(-webkit-min-device-pixel-ratio: 1.25),
-(min-resolution: 120dpi){
-  html body {
-    font-size: 2em;
-  }
-}
 
-@media
-(-webkit-min-device-pixel-ratio: 1.5),
-(min-resolution: 144dpi){
-  html body {
-    font-size: 2.3em;
-  }
-}
-
-html {
+body {
   font-family: $face-sans;
   font-variant-ligatures: normal;
   font-feature-settings: "kern" 1;
   font-feature-settings: "zero" 1;
   font-kerning: normal;
   -webkit-text-size-adjust: none;
+
+  overflow-wrap: break-word;
 }
 
 article {
   font-family: $face-sans;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+
+  a {
+    overflow-wrap: anywhere;
+  }
+
   b, strong {
     font-weight: 500;
   }
@@ -56,6 +41,10 @@ article {
 
 nav#blog, button, .post-header,  {
   font-family: $face-code;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  white-space: nowrap;
+  text-wrap: none;
   time {
     font-size: smaller;
   }

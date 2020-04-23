@@ -42,7 +42,9 @@ func (s *server) serveStatic(internalPath string, metadata *metadata) {
 func (s *server) serveResources(internalPath string, m *metadata) {
 	pathDirectory, reqPath := getPaths(internalPath)
 
+	// create fileserver handler for a given directory
 	fs := http.FileServer(http.Dir(pathDirectory))
+	// serves all files in a directory (which overrides the following redirect)
 	s.PathPrefix(reqPath + "/").Handler(http.StripPrefix(reqPath, fs))
 	// force / at the end of resource directories - permanent redirect
 	s.Handle(reqPath, http.RedirectHandler(reqPath+"/", 308))
