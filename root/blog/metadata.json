@@ -1,0 +1,7 @@
+{
+  "archetype": "blog",
+  "data": {
+    "title": "blog",
+    "posts-per-page": 3
+  }
+}

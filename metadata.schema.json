@@ -10,8 +10,37 @@
       "required": ["title"]
     },
 
-    "data_blog": { "type": "null" },
-    "data_blogpost": { "type": "null" },
+    "data_blog": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "posts-per-page": { "type": "number" }
+      },
+      "required": ["title", "posts-per-page"]
+    },
+
+    "data_blogpost": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string", "format": "date" }
+      },
+      "required": ["title", "date"]
+    },
+
+    "data_project": {
+      "type":  "object",
+      "properties": {
+        "title": { "type": "string" },
+        "start-date": { "type": "string", "format": "date" },
+        "end-date": { "type": "string", "format": "date" },
+        "summary": { "type": "string", "maxLength": 500 },
+        "thumbnail": { "type": "string" }
+      }
+    },
+
+    "data_portfolio": { "type": "null" },
+
     "data_construction": { "type": "null" },
     "data_raw": { "type": "null" },
     "data_resource": { "type": "null" }
@@ -23,14 +52,14 @@
   "properties": {
     "archetype": {
       "type": "string",
-      "enum": ["basic", "blog", "blogpost", "construction", "raw", "resource"],
+      "enum": ["basic", "blog", "blogpost", "construction", "raw", "resource", "portfolio", "project"],
       "description": "The type of content represented in a directory."
     },
     "data": {
       "description": "A placeholder for archetype-specific data"
     }
   },
-
+  "required": ["archetype"],
 
   "allOf": [
     {
@@ -82,6 +111,22 @@
       },
       "then": {
         "properties": { "data": { "$ref": "#/definitions/data_resource"}}
+      }
+    },
+    {
+      "if": {
+        "properties": { "archetype": { "const":  "portfolio"}}
+      },
+      "then": {
+        "properties": { "data": { "$ref": "#/definitions/data_portfolio"}}
+      }
+    },
+    {
+      "if": {
+        "properties": { "archetype": { "const":  "project"}}
+      },
+      "then": {
+        "properties": { "data": { "$ref": "#/definitions/data_project"}}
       }
     }
   ]

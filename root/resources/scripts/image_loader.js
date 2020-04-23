@@ -28,7 +28,7 @@ function loadMedia(i) {
     let temp = document.createElement("div");
     temp.innerHTML = mediaElements[i].innerHTML;
     let child = temp.firstElementChild;
-    child.setAttribute("class", "media-content");
+    child.classList.add("media-content");
 
     let src = child.getAttribute("src");
 
