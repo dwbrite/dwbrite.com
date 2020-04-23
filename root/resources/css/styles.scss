@@ -8,18 +8,11 @@ $anchor: #346d99;
 $anchor-active: #d60;
 
 body {
-  background: radial-gradient(circle at -20% -20%,
-          unquote('#f80b'),
-          unquote('#8842') 70%),
-  radial-gradient(circle at 25% 125%,
-          unquote('#0cf7'),
-          unquote('#4ff0') 70%),
-  radial-gradient(circle at 150% 50%,
-          unquote('#80f6'),
-          unquote('#f480') 100%),
-  radial-gradient(circle at 100% 50%,
-          unquote('#ffff'),
-          unquote('#fff0') 100%), #ddd no-repeat center center fixed;
+  background:
+          radial-gradient(circle at -20% -20%, #f80b, #8842 70%),
+          radial-gradient(circle at 25% 125%, #0cf7, #4ff0 70%),
+          radial-gradient(circle at 150% 50%, #80f6, #f480 100%),
+          #eee no-repeat center center fixed;
 
 
   background-size: cover;
@@ -31,7 +24,11 @@ body {
 
   &#mobile-webkit {
     //old webkit doesn't recognize simplified rgba hex colors.
-    background: linear-gradient(-45deg, rgba(60, 79, 255, 0.2), rgba(255, 80, 00, 0.2)), #FCC;
+    //background: linear-gradient(90deg, #f80b, #FBE, #80f6), #FCC;
+    background:
+            radial-gradient(circle at -20% -20%, #f80b, #8842 70%),
+            radial-gradient(circle at 75% 125%, #a6f6, #f4c0 100%),
+            #ddd no-repeat center center fixed;
   }
 }
 
@@ -68,6 +65,16 @@ h1 {
   color: $text-light;
 }
 
+hr {
+  width: 80%;
+  border: 1px solid $text-mid-tone;
+  border-bottom: 0;
+}
+
+blockquote {
+  border-left: 2px solid $text-mid-tone;
+}
+
 img {
   image-rendering: -moz-crisp-edges;
   image-rendering: -o-crisp-edges;
@@ -75,4 +82,13 @@ img {
   image-rendering: auto;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
+
+  &.quality-img {
+    image-rendering: auto;
+    image-rendering: high-quality;
+  }
+
+  &.bordered {
+    outline: 1px inset lightgray;
+  }
 }

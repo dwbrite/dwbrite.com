@@ -1,79 +1,136 @@
+$footer-size: 2em;
 
+// base css
 html {
   min-height: 100%;
-}
 
-body {
-  max-width: 44em;
-  margin: 50px auto 15px auto;
-  padding: 0;
-  overflow-wrap: break-word;
-  header#page-header {
-    position: relative;
-    button#font-btn {
-      position: absolute;
-      right: 0;
-    }
+  display: flex;
+  align-items: stretch;
 
-    h1#title {
+
+  // containers for main layout
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    max-width: 44em;
+    margin: 50px auto 0 auto;
+    padding: 0;
+    overflow-wrap: break-word;
+
+    header#page-header {
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      button#font-btn {
+        position: absolute;
+        align-self: flex-end;
+      }
+
+      nav {
+        width: 100%;
+        max-width: 24em;
+        display: flex;
+
+        ul {
+          flex: 1 1 0;
+          text-align: center;
+          margin: 0; padding: 0;
+        }
+      }
     }
 
-    nav {
+    main { flex-grow: 1; }
+
+    footer#page-footer {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: stretch;
-      margin: 0 auto;
-      ul {
-        margin: 0 5%;
-        padding: 0;
+      height: $footer-size;
+      overflow: hidden;
+      flex-direction: row-reverse;
+    }
+  }
+
+  button {
+    text-align: center;
+    height: 2em;
+    margin: 0.5em 1em;
+  }
+
+  main {
+    margin: auto 1em;
+    padding-bottom: $footer-size;
+
+    article {
+      margin: 1.5em auto 2.5em auto;
+
+      h3, h4 { margin-top: 1.5em; }
+      p { margin: 1em; }
+      hr { margin-bottom: 2em; }
+      ol { margin-left: 2em; }
+
+      blockquote {
+        padding: 0.25em 1em;
+        margin-left: 1em;
+      }
+
+      header {
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+
+        time {
+          margin-bottom: 0.5em;
+          margin-left: auto;
+        }
       }
     }
   }
-}
 
-
-main {
-  margin: auto 1em;
-  article {
-    margin: 1.5em auto 2.5em auto;
-    p {
-      margin: 1em;
-    }
-    header {
-      margin: 0;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      time {
-        margin-bottom: 0.5em;
-        margin-left: auto;
-      }
-    }
-  }
-  footer nav#blog {
-    height: 3em;
+  // media div, for after the load media button is pressed
+  div.media-div {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding-top: 1em;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 
-button {
-  text-align: center;
-  height: 2em;
-  margin: 0.5em 1em;
+// blog (ok)
+main footer nav#blog {
+  height: 3em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-top: 1em;
 }
 
-div.media-div {
+// portfolio
+article.project-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  div.project-main {
+    img.project-thumbnail {
+      max-height: 160px;
+      max-width: 285px;
+      margin: 1em;
+    }
+  }
+}
+
+// project
+article#project {
+  img {
+    max-width: 100%;
+  }
 }
 
 @media
