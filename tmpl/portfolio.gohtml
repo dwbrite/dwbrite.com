@@ -1,0 +1,27 @@
+{{ define "content" }}
+  {{ range .Projects }}
+    {{ template "subcontent" .}}
+  {{ end }}
+{{ end }}
+
+{{ define "subcontent" }}
+<article class="project-card">
+    <header>
+        <h2><a href="{{$.Path}}">{{$.Title}}</a></h2>
+    </header>
+
+    <div class="project-main">
+        <a href="{{$.Path}}"><img class="project-thumbnail bordered quality-img" src="{{$.Path}}/media/thumbnail.png" alt="cs" style="float:right;"/></a>
+        {{$.Summary}}
+    </div>
+
+    <footer class="project-footer">
+    </footer>
+</article>
+{{ end }}
+
+
+// we have the base content
+// page title (?)
+// and we need an array of projects, which would have a thumbnail on the left or the right
+// all done

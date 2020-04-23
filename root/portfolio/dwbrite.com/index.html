@@ -1,0 +1,65 @@
+<noscript class="media-noscript">
+    <img style="max-height:480px;" alt="image" src="./dwbrite.com/media/thumbnail.png" class="quality-img bordered">
+</noscript>
+
+
+<h3 id="about">About</h3>
+<p>
+    dwbrite.com is an adventure in css and web servers.
+    That is to say, this website is written in Go using gorilla for routing.
+    A crude form of caching is implemented for executed templates -
+    and eventually I'll add a filewatcher to cache everything else proper.
+</p>
+<noscript class="media-noscript">
+    <img style="max-height:480px;" alt="image" src="./dwbrite.com/media/old_screenshot.png" class="quality-img">
+</noscript>
+<p>
+    dwbrite.com used to be a Tumblr page where I wrote about my projects.
+    I had taken a bit too much inspiration from a certain
+    <a href="http://bettermotherfuckingwebsite.com/"><q>motherloving</q> website.</a>
+    I wanted a bit more color, but I quite liked the layout as it was.
+    The biggest change in the new version is the background.
+    Blue, orange, and purple radial gradients merge into neutral tones to make reading easy on the eyes.
+    And it's really pretty. Especially on tall pages.
+</p>
+<hr/>
+
+
+
+<h3 id="design">Design</h3>
+<p>
+    I designed this website with two things in mind:
+    <ol>
+        <li>simple design language</li>
+        <li>user friendliness</li>
+    </ol>
+</p>
+<p>
+    Simple design language means that interactive elements on the page should do what you expect,
+    Things like self-descriptive buttons, and links being blue - including in navigation.
+</p>
+<p>
+    User friendliness means not being actively hostile to the user.
+    Pages should load quickly without unnecessary bloat.
+    Media that isn't strictly required should be opt-in or lazy-loaded.
+    Contents of a page should be visible without the need for javascript.
+    Links should be links and not lead you to <a href="javascript:void 0;">garbage</a> when opened in a new tab.
+    Things like that.
+</p>
+<hr/>
+
+<h3 id="server">Under the hood</h3>
+<p>
+    The repo is split into source code and web content.
+    Web content is maintained in the <i>`root`</i> folder.
+    From there, each subdirectory can contain a <i>`metadata.json`</i> file
+    which defines how the server should render its contents.
+    A directory could be rendered as raw resources with a blacklist or whitelist,
+    as a template executed with the contents of <i>`index.html`</i>,
+    or as one of any other pre-made definitions.
+    This allows for all kinds of fun tricks and easter eggs I may want to add in the future ;)
+</p>
+
+<p>
+    Check out the source code on <a href="https://github.com/dwbrite/dwbrite.com">Github!</a>
+</p>

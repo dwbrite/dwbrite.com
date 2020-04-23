@@ -1,0 +1,7 @@
+{
+  "archetype":  "project",
+  "data": {
+    "title": "dwbrite.com",
+    "summary": "<p> dwbrite.com is an adventure in css and web servers. It's written in Go using gorilla for routing and includes a simple form of page caching. I use it to host my blog, portfolio, and a short summary of who I am.</p>"
+  }
+}
