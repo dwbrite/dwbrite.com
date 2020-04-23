@@ -88,8 +88,8 @@ func (s *server) handlePaths(internalPath string, file os.FileInfo, err error) e
 		s.serveResources(internalPath, metadata)
 	case "blog":
 		s.serveBlog(internalPath, metadata)
-		//case "portfolio":
-		//	s.servePortfolio(internalPath, metadata)
+	case "portfolio":
+		s.servePortfolio(internalPath, metadata)
 	}
 
 	return nil
