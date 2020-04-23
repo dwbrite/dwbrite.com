@@ -134,3 +134,22 @@ article#project {
     max-width: 100%;
   }
 }
+
+@media
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi){
+  html button {
+    font-size: 0.9em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  a.media-anchor {
+    width: 100%;
+    height: auto;
+    img.media-content {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
