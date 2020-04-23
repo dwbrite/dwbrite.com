@@ -1,7 +1,7 @@
 {{ define "subcontent" }}
 <article class="post">
   <header class="post-header">
-    <h2><a href="/blog?post={{$.Uid}}" id="{{$.Title}}">{{$.Title}}</a></h2>
+    <h2><a href="{{$.Link}}" id="{{$.Title}}">{{$.Title}}</a></h2>
     <time datetime="{{.PostDate | formatDate }}">{{.PostDate | formatDate }}</time>
   </header>
   {{$.Body}}
