@@ -1,10 +1,8 @@
 # dwbrite.com
 
-- install go
-- install dependencies 
+- install go >=1.14
+- install sassc
 ```
-go get -u github.com/gorilla/mux; \
-go get -u github.com/qri-io/jsonschema; \
 sudo apt install sassc
 ```
 
