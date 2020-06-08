@@ -52,7 +52,7 @@ func (s *server) serveBlog(internalPath string, m *metadata) {
 
 	// TODO: sort blog posts
 	sort.Slice(b.posts, func(i, j int) bool {
-		return b.posts[i].PostDate.Before(b.posts[j].PostDate)
+		return b.posts[i].PostDate.After(b.posts[j].PostDate)
 	})
 
 	page := BlogPage{
