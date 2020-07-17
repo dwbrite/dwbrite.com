@@ -1,0 +1,13 @@
+[Unit]
+Description=host dwbrite.com
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=make run
+WorkingDirectory=/home/dwbrite/code/personal/dwbrite.com
+Restart=always
+User=dwbrite
+
+[Install]
+WantedBy=multi-user.target
